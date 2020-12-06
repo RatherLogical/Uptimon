@@ -1,15 +1,15 @@
 **Screenshots**
 
-**Some Online Services**
+# Some Online Services
 ![Some Online Services](https://github.com/RatherLogical/Uptimon/raw/master/images/screenshot_1.png)
 
-**An Offline Service**
+# An Offline Service
 ![An Offline Service](https://github.com/RatherLogical/Uptimon/raw/master/images/screenshot_2.png)
 
-**We Have Tooltips!**
+# We Have Tooltips!
 ![We Have Tooltips!](https://github.com/RatherLogical/Uptimon/raw/master/images/screenshot_3.png)
 
-**Say Hi to Uptimon - A New Uptime Monitoring Solution**
+# Say Hi to Uptimon - A New Uptime Monitoring Solution
 
 I have tried literally every status page out there; paid solutions and self-hosted options. The only status page I found that I feel was simple enough, yet still capable of catering to many different monitoring needs is Statping. I have given this status page every opportunity to prove me wrong, but thus far every time I have tried to get it working, I have been dismayed to find out that either my website is taking 1561546884878 MS to load (what?!) or that the status page is completely broken because of its caching solution.
 
