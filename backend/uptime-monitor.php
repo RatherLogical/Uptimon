@@ -1,7 +1,7 @@
 <?php
 
 // This file is ran by a cron job at certain intervals to perform uptime/status checks
-// This file should be outside of the document root (I.e. not publicly accessable via a url)
+// This file should be outside of the document root (I.e. not publicly accessible via a url)
 
 require 'config.php';
 require 'app/db/database.php';

@@ -6,7 +6,7 @@ class Database
     // Database connection info
     private $servername = "localhost"; // IP/Domain of your database server
     private $username = "status"; // User for the database
-    private $password = "106fb6c279c65c874a4f094479496ae6729635ee0a1becc21914f3613b936f1a"; // Password for the respective User
+    private $password = "password"; // Password for the respective User
     private $dbname = "status"; // Database name
 
     // Inserts the uptime data into the database
