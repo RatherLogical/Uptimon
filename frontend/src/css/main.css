@@ -1,0 +1,211 @@
+@font-face {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/Ubuntu-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "grand_national_italicitalic";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/Grandnationalital-Italic.woff2") format("woff2");
+}
+
+body {
+    background-color: #212121;
+    color: #ffffff;
+    font-family: "Ubuntu" !important;
+    font-weight: normal;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* Loading Indicator */
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-size: 42px;
+    background-color: #212121;
+    padding: 20px;
+    border-radius: 0.8rem;
+    animation: shadow-pulse 1s infinite;
+}
+
+@keyframes shadow-pulse {
+    0% {
+        box-shadow: 0 0 0 0px #47d337;
+    }
+    100% {
+        box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+    }
+}
+
+/* Header Styles */
+.pageContainer {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.chartOuter {
+    background-color: #333333;
+    padding: 10px 0 0 0;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+    margin-top: 25px;
+    height: 405px;
+}
+
+.aboveChart {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    background-color: #212121;
+}
+
+.belowChart {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    left: 0;
+}
+
+/* Response Time */
+.aboveChart {
+    display: flex;
+}
+
+.aboveChartOuter {
+    width: fit-content;
+    background-color: #333333;
+    height: 67px;
+}
+
+.aboveChartOuter ~ .aboveChartOuter {
+    width: fit-content;
+    background-color: #333333;
+    height: 67px;
+    margin-left: 2px;
+}
+
+.aboveChartInnerItem {
+    padding: 8px 10px 0;
+}
+
+.serviceNameOuter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.serviceName {
+    font-size: 28px;
+    padding: 0 10px;
+}
+
+.responseTimeNumber {
+    font-size: 28px;
+    text-align: center;
+}
+
+.responseTimeText {
+    font-size: 15px;
+    text-align: center;
+}
+
+.uptimeNumber {
+    font-size: 28px;
+    text-align: center;
+}
+
+.uptimeText {
+    font-size: 15px;
+    text-align: center;
+}
+
+.serviceStatusOuter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px;
+    position: absolute;
+    right: 0;
+}
+
+.serviceStatusText {
+    font-size: 28px;
+    padding: 5px 10px;
+    border-radius: 0.8rem;
+}
+
+.serviceOnline {
+    background-color: #47d337;
+}
+
+.serviceOffline {
+    background-color: #eb1c22;
+}
+
+/* Below Chart */
+.belowChartOuter {
+    width: fit-content;
+    height: 100%;
+}
+
+.lastCheckedOuter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px;
+}
+
+/* Bottom Status Bar Styles */
+.bottomStatusBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #333333;
+    padding: 8px 20px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0.8rem 0 0;
+}
+
+.bottomStatusBarContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 20px;
+}
+
+.liveUpdatePing {
+    width: 14px;
+    height: 14px;
+    border-radius: 50px;
+    background-color: #28a745;
+    animation: update-ping 1s infinite;
+    float: left;
+    margin-right: 6px;
+}
+
+@keyframes update-ping {
+    0% {
+        box-shadow: 0 0 0 0px #47d337;
+    }
+    100% {
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0);
+    }
+}

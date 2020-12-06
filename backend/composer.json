@@ -1,0 +1,10 @@
+{
+    "require": {
+        "phpfastcache/phpfastcache": "7.1.0",
+        "layershifter/tld-extract": "^2.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": true
+    }
+}
