@@ -11,7 +11,7 @@
 
 # Installation
 
-Never download from master unless you want to hack on Uptimon. Get the latest release (!(https://github.com/RatherLogical/Uptimon/releases)) because it has already been compiled.
+Never download from master unless you want to hack on Uptimon. Get the latest release https://github.com/RatherLogical/Uptimon/releases because it has already been compiled.
 
 ## Backend
 
