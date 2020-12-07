@@ -1,9 +1,11 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var path = require('path');
+const path = require('path');
 
 const HtmlWebpackPluginConfig = {
+    inject: true,
     template: 'index.html'
 }
 
@@ -12,9 +14,6 @@ const MiniCssExtractPluginConfig = {
 }
 
 module.exports = {
-    // entry: {
-    //     app: './src/index.js',
-    // },
     entry: ['@babel/polyfill', './src/index.js'],
     output: {
         filename: '[name].[contenthash].js',
@@ -65,6 +64,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin(HtmlWebpackPluginConfig),
+        new AddAssetHtmlPlugin({
+            filepath: path.resolve(__dirname, 'src/config.js'),
+            publicPath: ''
+        }),
         new MiniCssExtractPlugin(MiniCssExtractPluginConfig)
     ],
 };

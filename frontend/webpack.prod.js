@@ -6,6 +6,13 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
     mode: 'production',
     optimization: {
-        minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+        minimizer: [new TerserJSPlugin({
+            terserOptions: {
+                format: {
+                  comments: false,
+                },
+            },
+            extractComments: false,
+        }), new OptimizeCSSAssetsPlugin({})],
     },
 });

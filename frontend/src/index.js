@@ -10,7 +10,6 @@ import {
     hideLoader,
     updateBottomStatus,
 } from "./js/utils";
-import { uptimeter_config } from "./config";
 import { sha256 } from "js-sha256";
 
 // Import styles
@@ -20,15 +19,15 @@ TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
 // Declare globals
-let apiURL = uptimeter_config.api_base_url,
-    apiPath = uptimeter_config.api_base_path,
-    verbosity = uptimeter_config.verbose_logging,
-    dataPoints = uptimeter_config.shown_data_points,
-    onlineColorA = uptimeter_config.online_primary_color,
-    onlineColorB = uptimeter_config.online_secondary_color,
-    offlineColorA = uptimeter_config.offline_primary_color,
-    offlineColorB = uptimeter_config.offline_secondary_color,
-    notAvailableColor = uptimeter_config.not_available_color,
+let apiURL = global.uptimeter_config.api_base_url,
+    apiPath = global.uptimeter_config.api_base_path,
+    verbosity = global.uptimeter_config.verbose_logging,
+    dataPoints = global.uptimeter_config.shown_data_points,
+    onlineColorA = global.uptimeter_config.online_primary_color,
+    onlineColorB = global.uptimeter_config.online_secondary_color,
+    offlineColorA = global.uptimeter_config.offline_primary_color,
+    offlineColorB = global.uptimeter_config.offline_secondary_color,
+    notAvailableColor = global.uptimeter_config.not_available_color,
     service_statuses;
 
 let activeCharts = Array();
@@ -39,10 +38,10 @@ window.addEventListener("load", function () {
 
 async function initialize() {
     updateCSS();
-    getServices('initialize');
+    getServices("initialize");
     if (uptimeter_config.live_update) {
         setInterval(async function () {
-            await getServices('update');
+            await getServices("update");
         }, uptimeter_config.live_update_interval);
     }
 }
@@ -51,11 +50,11 @@ async function initialize() {
 function updateCSS() {
     let root = document.documentElement;
 
-    root.style.setProperty('--online_primary_color', onlineColorA);
-    root.style.setProperty('--online_secondary_color', onlineColorB);
-    root.style.setProperty('--offline_primary_color', offlineColorA);
-    root.style.setProperty('--offline_secondary_color', offlineColorB);
-    root.style.setProperty('--not_available_color', notAvailableColor);
+    root.style.setProperty("--online_primary_color", onlineColorA);
+    root.style.setProperty("--online_secondary_color", onlineColorB);
+    root.style.setProperty("--offline_primary_color", offlineColorA);
+    root.style.setProperty("--offline_secondary_color", offlineColorB);
+    root.style.setProperty("--not_available_color", notAvailableColor);
 }
 
 function drawResponseTimesChart(safeName, responseTimes, serviceStatus) {
@@ -72,13 +71,13 @@ function drawResponseTimesChart(safeName, responseTimes, serviceStatus) {
         // Declare local vars
         let chartPrimaryColor, chartSecondaryColor;
 
-        if (serviceStatus === 'ONLINE') {
+        if (serviceStatus === "ONLINE") {
             chartPrimaryColor = onlineColorA;
             chartSecondaryColor = onlineColorB;
-        } else if (serviceStatus === 'OFFLINE') {
+        } else if (serviceStatus === "OFFLINE") {
             chartPrimaryColor = offlineColorA;
             chartSecondaryColor = offlineColorB;
-        } else if (serviceStatus === 'N/A') {
+        } else if (serviceStatus === "N/A") {
             chartPrimaryColor = notAvailableColor;
             chartSecondaryColor = notAvailableColor;
         }
@@ -92,16 +91,16 @@ function drawResponseTimesChart(safeName, responseTimes, serviceStatus) {
                 },
             ],
             noData: {
-                text: 'No Data Available',
-                align: 'center',
-                verticalAlign: 'middle',
+                text: "No Data Available",
+                align: "center",
+                verticalAlign: "middle",
                 offsetX: 0,
                 offsetY: 0,
                 style: {
-                  color: '#ffffff',
-                  fontSize: '24px',
-                  fontFamily: 'Ubuntu'
-                }
+                    color: "#ffffff",
+                    fontSize: "24px",
+                    fontFamily: "Ubuntu",
+                },
             },
             chart: {
                 height: 380,
@@ -240,53 +239,55 @@ function drawResponseTimesChart(safeName, responseTimes, serviceStatus) {
 
 function getServices(type) {
     return new Promise(async (resolve) => {
-        if (type === 'initialize') {
+        if (type === "initialize") {
             service_statuses = Array();
         }
-    
+
         // Get All Services
         let services = await getAPI_Data(`${apiURL}/${apiPath}/list-services/`);
         // Convert stringified JSON to parsed JSON
         services = JSON.parse(services);
-    
+
         // Perform Action on Each Service
         for (let i = 0; i < services.length; i++) {
-            if (type === 'initialize') {
+            if (type === "initialize") {
                 showLoader(`Loading Service ${i + 1} of ${services.length}`);
-            } else if (type === 'update') {
-                updateBottomStatus(`Updating Service ${i + 1} of ${services.length}`);
+            } else if (type === "update") {
+                updateBottomStatus(
+                    `Updating Service ${i + 1} of ${services.length}`
+                );
             }
-    
+
             const item = services[i];
-    
+
             // Generate A Safe Name For This Service
             const safeName = sha256(item.target);
-    
+
             // Get the Online/Offline status of the service
             let status = await getAPI_Data(
                 `${apiURL}/${apiPath}/service-status/?target=${item.target}`
             );
-    
+
             // Get Last Checked
             let lastChecked = await getAPI_Data(
                 `${apiURL}/${apiPath}/last-checked/?target=${item.target}`
             );
 
-            if (lastChecked !== 'N/A') {
+            if (lastChecked !== "N/A") {
                 lastChecked = new Date(Number(lastChecked));
-                lastChecked = toTitleCase(timeAgo.format(lastChecked));   
+                lastChecked = toTitleCase(timeAgo.format(lastChecked));
             }
-    
+
             // Get Uptime
             let uptime = await getAPI_Data(
                 `${apiURL}/${apiPath}/uptime/24h/?target=${item.target}`
             );
-    
+
             // Get AVG Response Time
             let avgRespTime = await getAPI_Data(
                 `${apiURL}/${apiPath}/response-time/24h/average/?target=${item.target}`
             );
-    
+
             // Get Response Times For Service And Downsample The Data
             let respTimes = await getAPI_Data(
                 `${apiURL}/${apiPath}/response-time/24h/?target=${item.target}`
@@ -295,7 +296,7 @@ function getServices(type) {
             // Convert The Stringified JSON to parsed JSON
             if (respTimes !== "N/A") {
                 respTimes = JSON.parse(respTimes);
-    
+
                 let chartWidth;
                 // Set up The Amount of Data Points to Show
                 if (dataPoints > respTimes.length) {
@@ -316,18 +317,18 @@ function getServices(type) {
             }
 
             if (verbosity) {
-                console.log('Title:', item.title);
-                console.log('Safe Name', safeName);
-                console.log('Target', item.target);
-                console.log('Status', status);
-                console.log('Response Times', respTimes);
-                console.log('Average Response Time', avgRespTime);
-                console.log('Uptime', uptime);
-                console.log('Last Checked', lastChecked);
-                console.log('-----------------------------');
+                console.log("Title:", item.title);
+                console.log("Safe Name", safeName);
+                console.log("Target", item.target);
+                console.log("Status", status);
+                console.log("Response Times", respTimes);
+                console.log("Average Response Time", avgRespTime);
+                console.log("Uptime", uptime);
+                console.log("Last Checked", lastChecked);
+                console.log("-----------------------------");
             }
-    
-            if (type === 'initialize') {
+
+            if (type === "initialize") {
                 // Create an Item in The Array For Each Service With All Necessary Data
                 service_statuses.push({
                     title: item.title,
@@ -339,11 +340,11 @@ function getServices(type) {
                     uptime: uptime,
                     lastChecked: lastChecked,
                 });
-            } else if (type === 'update') {
+            } else if (type === "update") {
                 // Update Each Service
                 for (let i = 0; i < service_statuses.length; i++) {
                     const item = service_statuses[i];
-    
+
                     // Ensure We Are Updating The Correct Service
                     if (item.safeName === safeName) {
                         item.status = status;
@@ -355,15 +356,15 @@ function getServices(type) {
                 }
             }
         }
-    
-        if (type === 'initialize') {
+
+        if (type === "initialize") {
             await initializeServices();
-        } else if (type === 'update') {
+        } else if (type === "update") {
             await updateServices();
         }
-    
+
         hideLoader();
-        resolve('done');
+        resolve("done");
     });
 }
 
@@ -373,7 +374,9 @@ function initializeServices() {
         for (let i = 0; i < service_statuses.length; i++) {
             const item = service_statuses[i];
 
-            showLoader(`Creating Service ${i + 1} of ${service_statuses.length}`);
+            showLoader(
+                `Creating Service ${i + 1} of ${service_statuses.length}`
+            );
 
             await generateServiceHTML(
                 item.title,
@@ -389,7 +392,9 @@ function initializeServices() {
         for (let i = 0; i < service_statuses.length; i++) {
             const item = service_statuses[i];
 
-            showLoader(`Rendering Chart ${i + 1} of ${service_statuses.length}`);
+            showLoader(
+                `Rendering Chart ${i + 1} of ${service_statuses.length}`
+            );
 
             await drawResponseTimesChart(
                 item.safeName,
@@ -398,7 +403,7 @@ function initializeServices() {
             );
         }
 
-        resolve('done');
+        resolve("done");
     });
 }
 
@@ -407,9 +412,9 @@ function updateServices() {
         // Update The Markup of Each Service
         for (let i = 0; i < service_statuses.length; i++) {
             const item = service_statuses[i];
-        
+
             let statusClass, statusText;
-            if (item.status === 'ONLINE') {
+            if (item.status === "ONLINE") {
                 statusClass = "serviceOnline";
                 statusText = "ONLINE";
 
@@ -499,7 +504,11 @@ function updateServices() {
             ).innerHTML = `Last Checked: ${item.lastChecked}`; // Update Last Checked Time
 
             // Update This Service's Chart
-            await drawResponseTimesChart(item.safeName, item.respTimes, item.status);
+            await drawResponseTimesChart(
+                item.safeName,
+                item.respTimes,
+                item.status
+            );
         }
 
         updateBottomStatus(null, true);
@@ -517,13 +526,13 @@ function generateServiceHTML(
 ) {
     return new Promise((resolve) => {
         let statusClass, statusText;
-        if (status === 'ONLINE') {
+        if (status === "ONLINE") {
             statusClass = "serviceOnline";
             statusText = "ONLINE";
-        } else if (status === 'OFFLINE') {
+        } else if (status === "OFFLINE") {
             statusClass = "serviceOffline";
             statusText = "OFFLINE";
-        } else if (status === 'N/A') {
+        } else if (status === "N/A") {
             statusClass = "serviceNotAvailable";
             statusText = "N/A";
         }

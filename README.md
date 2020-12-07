@@ -11,7 +11,7 @@
 
 # Installation
 
-- Backend
+## Backend
 
 Requirements
 - A linux OS - CRON jobs are used to trigger events, therefore linux is required.
@@ -27,10 +27,12 @@ A sample NGINX config file is included in the ``/configs`` directory of the repo
 
 You will need to edit your system's crontab file ``crontab -e`` on Ubuntu and add the contents of ``/configs/uptime-monitor.crontab``; **note that you need to edit the paths listed in the sample crontab file to match your setup**.
 
-- Frontend
+## Frontend
 
 Requirements
 - This is a SPA (single page app); all you need is the ability to host a static site (Can be hosted on a separate server if need be).
+
+All you need to do to configure the frontend is edit the ``config.js`` file to reflect your installation.
 
 # Say Hi to Uptimon - A New Uptime Monitoring Solution
 
