@@ -1,8 +1,10 @@
 <?php
 
-require '../../db/database.php';
 require '../../../config.php';
+require '../../db/database.php';
 require '../../../vendor/autoload.php';
+
+header('Content-type: application/json');
 
 $db = new Database;
 
@@ -22,7 +24,13 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
         exit("Domain/IP invalid");
     }
 
-    echo $db->lastChecked($url);
+    $lastChecked = $db->lastChecked($url);
+    
+    if ($lastChecked) {
+        echo($lastChecked);
+    } else {
+        exit("N/A");
+    }
 } else {
     exit("Domain not given");
 }

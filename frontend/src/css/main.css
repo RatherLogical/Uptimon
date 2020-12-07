@@ -1,17 +1,17 @@
+:root {
+    --online_primary_color: #47d337;
+    --online_secondary_color: #3ab42d;
+    --offline_primary_color: #eb1c22;
+    --offline_secondary_color: #ff252c;
+    --not_available_color: #666666;
+}
+
 @font-face {
     font-family: "Ubuntu";
     font-style: normal;
     font-weight: 400;
     font-display: swap;
     src: url("../fonts/Ubuntu-Regular.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "grand_national_italicitalic";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("../fonts/Grandnationalital-Italic.woff2") format("woff2");
 }
 
 body {
@@ -40,7 +40,7 @@ body {
 
 @keyframes shadow-pulse {
     0% {
-        box-shadow: 0 0 0 0px #47d337;
+        box-shadow: 0 0 0 0px var(--online_primary_color);
     }
     100% {
         box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
@@ -150,11 +150,15 @@ body {
 }
 
 .serviceOnline {
-    background-color: #47d337;
+    background-color: var(--online_primary_color);
 }
 
 .serviceOffline {
-    background-color: #eb1c22;
+    background-color: var(--offline_primary_color);
+}
+
+.serviceNotAvailable {
+    background-color: var(--not_available_color);
 }
 
 /* Below Chart */
@@ -195,7 +199,7 @@ body {
     width: 14px;
     height: 14px;
     border-radius: 50px;
-    background-color: #28a745;
+    background-color: var(--online_primary_color);
     animation: update-ping 1s infinite;
     float: left;
     margin-right: 6px;
@@ -203,7 +207,7 @@ body {
 
 @keyframes update-ping {
     0% {
-        box-shadow: 0 0 0 0px #47d337;
+        box-shadow: 0 0 0 0px var(--online_primary_color);
     }
     100% {
         box-shadow: 0 0 0 4px rgba(0, 0, 0, 0);

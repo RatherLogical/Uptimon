@@ -1,8 +1,10 @@
 <?php
 
-require '../../../../db/database.php';
 require '../../../../../config.php';
+require '../../../../db/database.php';
 require '../../../../../vendor/autoload.php';
+
+header('Content-type: application/json');
 
 $db = new Database;
 
@@ -22,7 +24,13 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
         exit("Domain/IP invalid");
     }
 
-    echo $db->averageResponseTime24h($url);
+    $averageResponseTime24h = $db->averageResponseTime24h($url);
+
+    if ($averageResponseTime24h) {
+        echo $averageResponseTime24h;
+    } else {
+        exit("N/A");
+    }
 } else {
     exit("Domain not given");
 }

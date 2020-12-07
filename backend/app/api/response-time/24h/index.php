@@ -1,13 +1,12 @@
 <?php
 
 // This API endpoint returns all of the non-zero response times over the last 24 hours
-// A request would look like: https://status.example.com/api/response-time/24h/?target=www.example.com
-
-$time_start = microtime(true);
-
+// A request would look like: https://status.example.com/response-time/24h/?target=www.example.com
 require '../../../../config.php';
 require '../../../db/database.php';
 require '../../../../vendor/autoload.php';
+
+header('Content-type: application/json');
 
 use Phpfastcache\Helper\Psr16Adapter;
 
@@ -35,17 +34,19 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
 $db = new Database;
 
 if (!$Psr16Adapter->has($url)) {
-    if ($db->responseTime24H($url)) {
-        $intervalTTL = '';
-        foreach ($checks as $key => $check) {
-            $interval = $check[0];
-            $parsedCheckUrl = $extract->parse($check[1]);
+    $intervalTTL = '';
+    foreach ($checks as $key => $check) {
+        $interval = $check[0];
+        $parsedCheckUrl = $extract->parse($check[1]);
 
-            if ($parsedCheckUrl == $parsedUrl) {
-                $intervalTTL = $interval * 60;
-            }
+        if ($parsedCheckUrl == $parsedUrl) {
+            $intervalTTL = $interval * 60;
         }
-        $data = $db->responseTime24H($url);
+    }
+
+    $data = $db->responseTime24H($url);
+
+    if ($data !== false) {
         $output = '[';
         foreach($data as $result) {
             $output .= '[' . $result[0] . ',' . $result[1] . '],';
@@ -54,19 +55,10 @@ if (!$Psr16Adapter->has($url)) {
         $output = substr($output, 0, -1);
         $output .= ']';
         $Psr16Adapter->set($url, $output, $intervalTTL);
-        header('Content-type: application/json');
         echo $output;
-        //echo 'Database: ' . $data . ' TTL: ' . $intervalTTL;
-    } else { // Returns false if no results are returned from the sql query
-        echo 'No data';
+    } else {
+        exit("N/A");
     }
 } else {
-    header('Content-type: application/json');
-    echo $Psr16Adapter->get($url);
+   echo $Psr16Adapter->get($url);
 }
-
-$time_end = microtime(true);
-
-$et = ($time_end - $time_start) / 60;
-
-//echo "<br>Processing Time: " . number_format((float) $et, 10);
