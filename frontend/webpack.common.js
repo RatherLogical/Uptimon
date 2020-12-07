@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -64,10 +63,6 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin(HtmlWebpackPluginConfig),
-        new AddAssetHtmlPlugin({
-            filepath: path.resolve(__dirname, 'src/config.js'),
-            publicPath: ''
-        }),
         new MiniCssExtractPlugin(MiniCssExtractPluginConfig)
     ],
 };

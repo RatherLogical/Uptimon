@@ -10,6 +10,10 @@ import {
     hideLoader,
     updateBottomStatus,
 } from "./js/utils";
+
+if (__MODE__ === "development") {
+    require("./config.js");
+}
 import { sha256 } from "js-sha256";
 
 // Import styles
