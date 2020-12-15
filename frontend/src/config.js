@@ -1,5 +1,5 @@
 window.uptimeter_config = {
-    api_base_url: "https://status.dzlte.st", // The URL of the uptimeter backend installation (no trailing slash)
+    api_base_url: "https://status.example.com", // The URL of the uptimeter backend installation (no trailing slash)
     api_base_path: "", // The base path of the backend installation's public directory (no trailing slash)
     live_update: true, // Whether or not the status page should automatically check for new data
     live_update_interval: 60000, // How often the status page should check for new data
