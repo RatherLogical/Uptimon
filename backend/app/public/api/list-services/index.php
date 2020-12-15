@@ -1,8 +1,9 @@
 <?php
 
-require '../../../config.php';
-
-header('Content-type: application/json');
+require realpath('../../../../config.php');
+require realpath('../../../db/database.php');
+require realpath('../../../../vendor/autoload.php');
+require realpath('../../../includes/api-output.php');
 
 if (!empty(is_array($checks))) {
     $output = '[';

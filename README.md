@@ -23,7 +23,7 @@ Requirements
 
 To start you need to set the time zone at the top of the ``config.php`` file, you will also need to add your services to the list (obviously remove the default entries), and set up your MySQL database information.
 
-A sample NGINX config file is included in the ``/configs`` directory of the repo. This should provide you with a good starting point. Aside from that please ensure your document root is not outside of the ``/app/api`` directory for security/abuse concerns after installation.
+A sample NGINX config file is included in the ``/configs`` directory of the repo. This should provide you with a good starting point. Aside from that please ensure your document root is not outside of the ``/app/public`` directory for security/abuse concerns after installation.
 
 **You might have to set your open_basedir to the root of your vhosts dir; for example on NGINX with php-fpm: ``fastcgi_param PHP_ADMIN_VALUE "open_basedir=$base/:/usr/lib/php/:/tmp/:/var/www";``.**
 
@@ -58,5 +58,6 @@ Planned Features:
 - An alert system with different options: Slack, Discord, SMTP, SMS (Twilio), and others if needed.
 - More service monitoring options; right now you can only monitor http(s) services, but I plan to add TCP/UDP, and ICMP.
 - Ability to export and import monitoring data and configurations.
+- A Docker container for easy deployment.
 
 **Note that although I have wanted to do this for a while; I have only been working on the code for this project for a small amount of time. Although the basic functionality is here, it is by no means a true representation of the final quality of the project.**

@@ -2,11 +2,10 @@
 
 // This API endpoint returns all of the non-zero response times over the last 24 hours
 // A request would look like: https://status.example.com/response-time/24h/?target=www.example.com
-require '../../../../config.php';
-require '../../../db/database.php';
-require '../../../../vendor/autoload.php';
-
-header('Content-type: application/json');
+require realpath('../../../../../config.php');
+require realpath('../../../../db/database.php');
+require realpath('../../../../../vendor/autoload.php');
+require realpath('../../../../includes/api-output.php');
 
 use Phpfastcache\Helper\Psr16Adapter;
 

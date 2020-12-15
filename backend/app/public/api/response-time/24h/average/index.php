@@ -1,10 +1,9 @@
 <?php
 
-require '../../../../../config.php';
-require '../../../../db/database.php';
-require '../../../../../vendor/autoload.php';
-
-header('Content-type: application/json');
+require realpath('../../../../../../config.php');
+require realpath('../../../../../db/database.php');
+require realpath('../../../../../../vendor/autoload.php');
+require realpath('../../../../../includes/api-output.php');
 
 $db = new Database;
 
