@@ -32,7 +32,7 @@ You will need to edit your system's crontab file ``crontab -e`` on Ubuntu and ad
 ## Frontend
 
 Requirements
-- This is a SPA (single page app); all you need is the ability to host a static site (Can be hosted on a separate server if need be).
+- This is a SPA (single page app); all you need is the ability to host a static site (Can be hosted on a separate server if needed).
 
 All you need to do to configure the frontend is edit the ``config.js`` file to reflect your installation.
 
@@ -47,12 +47,12 @@ The backend runs on the latest versions of PHP (up to 7.4; 8.0 support is planne
 Current Features:
 - Live update of the frontend i.e. gets the most up to date service info at your configured interval.
 - Configurable data downsampling/decimation on the charts (this is useful when you need to reduce the amount of data in a dataset before visualizing it without losing the visual characteristics of the data).
-- Customizable Online/Offline colors for the frontend.
+- Customizable color scheme for the frontend.
 - Very modern and high performance UI.
 - Simple and low resource usage backend.
 
 Planned Features:
-- Fully responsive frontend
+- A compact view mode for easy visibility of all services.
 - An administration interface
     - The admin interface will allow you to configure services and manage your configured alerts.
 - An alert system with different options: Slack, Discord, SMTP, SMS (Twilio), and others if needed.

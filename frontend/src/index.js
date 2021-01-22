@@ -559,7 +559,7 @@ function generateServiceHTML(
                     <div class="serviceStatusText ${statusClass}" id="${safeName}_status">${statusText}</div>
                 </div>
             </div>
-            <div id="${safeName}_chart"></div>
+            <div class="chartContainer" id="${safeName}_chart"></div>
             <div class="belowChart ${statusClass}" id="${safeName}_belowChart">
                 <div class="belowChartOuter lastCheckedOuter">
                     <div class="lastCheckedText" id="${safeName}_lastChecked">Last Checked: ${lastChecked}</div>

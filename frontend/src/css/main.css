@@ -63,6 +63,15 @@ body {
     height: 405px;
 }
 
+.chartContainer {
+    height: 395px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
 .aboveChart {
     position: absolute;
     top: 0;
@@ -95,7 +104,7 @@ body {
     width: fit-content;
     background-color: #333333;
     height: 67px;
-    margin-left: 2px;
+    margin-left: 3px;
 }
 
 .aboveChartInnerItem {
@@ -212,5 +221,55 @@ body {
     }
     100% {
         box-shadow: 0 0 0 4px rgba(0, 0, 0, 0);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .chartOuter {
+        height: 450px;
+    }
+
+    .aboveChart {
+      display: block;
+      height: auto;
+    }
+
+    .serviceStatusOuter {
+        display: none;
+    }
+
+    .serviceName {
+      max-width: 500px !important;
+    }
+
+    .serviceNameOuter {
+      width: 100%;
+      margin-bottom: 3px;
+    }
+
+    .responseTimeOuter {
+      width: 55% !important;
+      float: left;
+      margin-left: unset !important;
+      margin-right: 3px;
+      margin-bottom: 3px;
+    }
+
+    .uptimeOuter {
+      width: calc(45% - 3px) !important;
+      margin-left: unset !important;
+      float: right;
+    }
+}
+
+@media screen and (max-width: 991px) {
+   .serviceName {
+      max-width: 300px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+   .serviceName {
+      max-width: 540px;
     }
 }
