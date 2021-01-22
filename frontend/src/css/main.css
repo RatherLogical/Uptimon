@@ -230,8 +230,8 @@ body {
     }
 
     .aboveChart {
-      display: block;
-      height: auto;
+        display: block;
+        height: auto;
     }
 
     .serviceStatusOuter {
@@ -239,37 +239,37 @@ body {
     }
 
     .serviceName {
-      max-width: 500px !important;
+        max-width: 500px !important;
     }
 
     .serviceNameOuter {
-      width: 100%;
-      margin-bottom: 3px;
+        width: 100%;
+        margin-bottom: 3px;
     }
 
     .responseTimeOuter {
-      width: 55% !important;
-      float: left;
-      margin-left: unset !important;
-      margin-right: 3px;
-      margin-bottom: 3px;
+        width: 55% !important;
+        float: left;
+        margin-left: unset !important;
+        margin-right: 3px;
+        margin-bottom: 3px;
     }
 
     .uptimeOuter {
-      width: calc(45% - 3px) !important;
-      margin-left: unset !important;
-      float: right;
+        width: calc(45% - 3px) !important;
+        margin-left: unset !important;
+        float: right;
     }
 }
 
 @media screen and (max-width: 991px) {
-   .serviceName {
-      max-width: 300px;
+    .serviceName {
+        max-width: 300px;
     }
 }
 
 @media screen and (min-width: 992px) {
-   .serviceName {
-      max-width: 540px;
+    .serviceName {
+        max-width: 540px;
     }
 }
