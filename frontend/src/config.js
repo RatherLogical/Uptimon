@@ -1,5 +1,5 @@
 window.uptimeter_config = {
-    api_base_url: "https://status.dzltest.com", // The URL of the uptimeter backend installation (no trailing slash).
+    api_base_url: "https://status.example.com", // The URL of the uptimeter backend installation (no trailing slash).
     api_base_path: "api", // The base path of the backend installation's api directory (no leading or trailing slash).
     live_update: true, // Whether or not the status page should automatically check for new data.
     live_update_interval: 60000, // How often the status page should check for new data.
@@ -9,5 +9,5 @@ window.uptimeter_config = {
     offline_primary_color: "#eb1c22", // Main color used when a service is offline.
     offline_secondary_color: "#ff252c", // Accent color used when a service is offline.
     not_available_color: "#666666", // Color used when a service does not have sufficient data to be fully portrayed.
-    verbose_logging: true, // Whether or not to create highly detailed browser console logs.
+    verbose_logging: false, // Whether or not to create highly detailed browser console logs.
 };
