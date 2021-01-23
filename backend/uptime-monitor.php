@@ -3,11 +3,12 @@
 // This file is ran by a cron job at certain intervals to perform uptime/status checks
 // This file should be outside of the document root (I.e. not publicly accessible via a url)
 
-require 'config.php';
-require 'app/db/database.php';
-require 'vendor/autoload.php';
+chdir(__DIR__);
 
-$unconfiguredDomainFound = false;
+$configJSONPath = realpath('config.json');
+require realpath('config.php');
+require realpath('app/db/database.php');
+require realpath('vendor/autoload.php');
 
 $cliInt = getopt("t:"); // Gets cli param from the crontab
 if (isset($cliInt['t'])) {
@@ -42,13 +43,15 @@ if (isset($cliInt['t'])) {
 
 function serverResponseTime($checks, $tInt)
 {
+    $unconfiguredDomainFound = false;
+
     $extract = new LayerShifter\TLDExtract\Extract();
 
     foreach ($checks as $key => $check) { // Runs checks for each Domain/IP in the config file
         $interval = $check[0];
 
         // If the interval the cron job is targeting matches an interval listed in the config file it checks the respective domain
-        if ($tInt == $interval) {  
+        if ($tInt == $interval) {
             $parsedUrl = $extract->parse($check[1]);
             $url = str_replace('.', '-', $parsedUrl->getFullHost());
 

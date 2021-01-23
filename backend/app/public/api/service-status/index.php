@@ -1,5 +1,6 @@
 <?php
 
+$configJSONPath = '../../../../config.json';
 require realpath('../../../../config.php');
 require realpath('../../../db/database.php');
 require realpath('../../../../vendor/autoload.php');

@@ -1,0 +1,26 @@
+{
+    "timezone": "America/New_York",
+    "debug": false,
+    "req_timeout": 5,
+    "db_host": "localhost",
+    "db_name": "status",
+    "db_user": "status",
+    "db_pass": "password",
+    "checks": [
+        {
+            "check_interval": "1",
+            "domain_ip": "example.com",
+            "service_name": "Random Site"
+        },
+        {
+            "check_interval": "1",
+            "domain_ip": "111.222.333.444",
+            "service_name": "A Dead IP"
+        },
+        {
+            "check_interval": "1",
+            "domain_ip": "1.1.1.1",
+            "service_name": "CloudFlare DNS"
+        }
+    ]
+}
