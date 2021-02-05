@@ -9,8 +9,9 @@
 - **ADDED** SSL validation.
 - **FRONTEND** Added an option to set the page title.
 - **FRONTEND** Refined the responsiveness of the frontend a bit more.
-- **PERFORMANCE** Uptimon can now handle many more checks. The backend is using curl multi which means multiple connections can be made simultaneously. Before, only one connection could be made at a time.
+- **PERFORMANCE** Uptimon can now handle many more checks. The backend is using cURL multi which means multiple connections can be made simultaneously. Before, only one connection could be made at a time.
 - **TWEAK** Changed all occurrences of uptimeter to uptimon.
+- **FIX** The cURL timeout works now.
 
 # v0.0.3 - Beta 2
 
