@@ -64,7 +64,7 @@ function serverResponseTime($checks, $tInt)
                 curl_setopt($ch0, CURLOPT_HEADER, false); // TRUE to include the header in the output
                 curl_setopt($ch0, CURLOPT_RETURNTRANSFER, false); // TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it directly
                 curl_setopt($ch0, CURLOPT_NOBODY, true); // Does the download request without getting the body
-                curl_setopt($ch0, CURLOPT_CONNECTTIMEOUT, REQ_TIMEOUT); // REQ_TIMEOUT set in config.php
+                curl_setopt($ch0, CURLOPT_TIMEOUT, CURL_TIMEOUT); // CURL_TIMEOUT set in config.php
                 curl_exec($ch0);
                 $resp0 = curl_getinfo($ch0);
                 curl_close($ch0);
@@ -74,7 +74,7 @@ function serverResponseTime($checks, $tInt)
                 curl_setopt($ch1, CURLOPT_HEADER, true); // TRUE to include the header in the output
                 curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true); // TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it directly
                 curl_setopt($ch1, CURLOPT_NOBODY, true); // Does the download request without getting the body
-                curl_setopt($ch1, CURLOPT_CONNECTTIMEOUT, REQ_TIMEOUT); // REQ_TIMEOUT set in config.php
+                curl_setopt($ch1, CURLOPT_TIMEOUT, CURL_TIMEOUT); // CURL_TIMEOUT set in config.php
                 $resp1 = curl_exec($ch1);
                 curl_close($ch1);
 
@@ -82,21 +82,9 @@ function serverResponseTime($checks, $tInt)
 
                 if ($resp1) {
                     $rt = $resp0['starttransfer_time'] * 1000;
-                    if ($parsedUrl->isValidDomain()) {
-                        // Strips everything except the domain & servername(s), and replaces the dots (.) with dashes (-), respectively.
-                        $db->insertLastUptimeInfo(round($rt, 0), 1, $date, $url);
-                    } elseif ($parsedUrl->isIp()) {
-                        // Replaces the dots (.) with dashes (-).
-                        $db->insertLastUptimeInfo(round($rt, 0), 1, $date, $url);
-                    }
+                    $db->insertLastUptimeInfo(round($rt, 0), 1, $date, $url);
                 } else {
-                    if ($parsedUrl->isValidDomain()) {
-                        // Strips everything except the domain & servername(s), and replaces the dots (.) with dashes (-), respectively.
-                        $db->insertLastUptimeInfo(0, 0, $date, $url);
-                    } elseif ($parsedUrl->isIp()) {
-                        // Replaces the dots (.) with dashes (-).
-                        $db->insertLastUptimeInfo(0, 0, $date, $url);
-                    }
+                    $db->insertLastUptimeInfo(0, 0, $date, $url);
                 }
             } else {
                 echo "found an unconfigured domain";

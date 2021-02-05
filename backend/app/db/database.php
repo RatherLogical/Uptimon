@@ -170,15 +170,15 @@ class Database
     {
         $lastCheck = null;
         $case = 0;
-    
+
         $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
 
         // If this service exists in the database
         if ($this->table_exists($d0, $conn)) {
             $sql = "SELECT timestamp FROM `$d0` ORDER BY id DESC LIMIT 1";
-    
+
             $result = $conn->query($sql);
-    
+
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $lastCheck = strtotime($row["timestamp"] . ' ' . date_default_timezone_get()) * 1000;
@@ -186,7 +186,7 @@ class Database
                 $case = 1;
             }
             $conn->close();
-    
+
             if ($case) {
                 return $this->sendLastChecked($lastCheck);
             } else {

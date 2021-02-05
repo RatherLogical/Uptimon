@@ -14,6 +14,7 @@ import {
 if (__MODE__ === "development") {
     require("./config.js");
 }
+
 import { sha256 } from "js-sha256";
 
 // Import styles
@@ -23,15 +24,15 @@ TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
 // Declare globals
-let apiURL = global.uptimeter_config.api_base_url,
-    apiPath = global.uptimeter_config.api_base_path,
-    verbosity = global.uptimeter_config.verbose_logging,
-    dataPoints = global.uptimeter_config.shown_data_points,
-    onlineColorA = global.uptimeter_config.online_primary_color,
-    onlineColorB = global.uptimeter_config.online_secondary_color,
-    offlineColorA = global.uptimeter_config.offline_primary_color,
-    offlineColorB = global.uptimeter_config.offline_secondary_color,
-    notAvailableColor = global.uptimeter_config.not_available_color,
+let apiURL = global.uptimon_config.api_base_url,
+    apiPath = global.uptimon_config.api_base_path,
+    verbosity = global.uptimon_config.verbose_logging,
+    dataPoints = global.uptimon_config.shown_data_points,
+    onlineColorA = global.uptimon_config.online_primary_color,
+    onlineColorB = global.uptimon_config.online_secondary_color,
+    offlineColorA = global.uptimon_config.offline_primary_color,
+    offlineColorB = global.uptimon_config.offline_secondary_color,
+    notAvailableColor = global.uptimon_config.not_available_color,
     service_statuses;
 
 let activeCharts = Array();
@@ -43,10 +44,10 @@ window.addEventListener("load", function () {
 async function initialize() {
     updateCSS();
     getServices("initialize");
-    if (uptimeter_config.live_update) {
+    if (uptimon_config.live_update) {
         setInterval(async function () {
             await getServices("update");
-        }, uptimeter_config.live_update_interval);
+        }, uptimon_config.live_update_interval);
     }
 }
 
@@ -308,7 +309,7 @@ function getServices(type) {
                     chartWidth = respTimes.length;
                 } else {
                     // Otherwise Use The User Specified Data Point Amount
-                    chartWidth = uptimeter_config.shown_data_points;
+                    chartWidth = uptimon_config.shown_data_points;
                 }
                 // Downsample The Data
                 respTimes = LTTB(respTimes, chartWidth);

@@ -1,11 +1,14 @@
 {
-    "timezone": "America/New_York",
+    "timezone": "",
     "debug": false,
-    "req_timeout": 5,
-    "db_host": "localhost",
-    "db_name": "status",
-    "db_user": "status",
-    "db_pass": "password",
+    "curl_timeout": 5,
+    "php_timeout": 0,
+    "database_host": "",
+    "database_name": "",
+    "database_user": "",
+    "database_pass": "",
+    "admin_email": "",
+    "admin_password": "",
     "checks": [
         {
             "check_interval": "1",

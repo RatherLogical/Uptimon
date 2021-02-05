@@ -1,0 +1,125 @@
+@font-face {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./fonts/Ubuntu-Regular.woff2") format("woff2");
+}
+
+body {
+    background-color: #212121;
+    color: #ffffff;
+    font-family: "Ubuntu" !important;
+    font-weight: normal;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+.pageContent {
+    margin: 0 auto;
+    width: 30vw;
+    min-width: 380px;
+    margin-bottom: 30px;
+}
+
+.installerLogo {
+    width: 100%;
+}
+
+.installerInfo {
+    text-align: center;
+    font-size: 24px;
+}
+
+.inputsContainer {
+    background-color: #333333;
+    border-radius: 0.8rem;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.messageContainer {
+    border-radius: 0.8rem;
+    background-color: #212121;
+    padding: 15px;
+    border-left: 2px solid;
+    max-width: 213px;
+}
+
+.messageSuccess {
+    border-left-color: #00b700;
+}
+
+.messageError {
+    border-left-color: #ff0007;
+}
+
+.messageDefault {
+    border-left-color: #ffffff;
+}
+
+.inputGroup {
+    margin: 15px 0;
+}
+
+label {
+    display: flex;
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.input {
+    background-color: #212121;
+    border: unset;
+    border-radius: 0.8rem;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 10px;
+    font-family: monospace;
+}
+
+.input:focus {
+    outline: unset;
+    background-color: rgba(0, 183, 0, 0.3);
+}
+
+.helpText {
+    margin-top: 6px;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+a {
+    color: #00b700;
+}
+
+.requiredAsterisk {
+    color: #ff0007;
+    margin-left: 5px;
+}
+
+.buttonContainer {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.installButton {
+    background-color: #00b700;
+    color: #ffffff;
+    border: unset;
+    border-radius: 0.8rem;
+    font-size: 24px;
+    padding: 8px 20px;
+    font-family: 'Ubuntu';
+    cursor: pointer;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+.installButton:hover {
+    background-color: #008c00;
+}
+
+.installButton:focus {
+    outline: unset;
+}

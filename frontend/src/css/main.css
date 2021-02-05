@@ -31,10 +31,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    font-size: 42px;
+    font-size: 4vw;
     background-color: #212121;
     padding: 20px;
     border-radius: 0.8rem;
+    text-align: center;
     animation: shadow-pulse 1s infinite;
 }
 
