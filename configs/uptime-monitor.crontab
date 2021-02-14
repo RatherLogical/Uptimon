@@ -1,12 +1,12 @@
 # Interval   |  Path to PHP   | Path to uptime-monitor.php w/ interval     |    Disable Emails
-* * * * *       /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 1      >/dev/null 2>&1 # Every min
-*/2 * * * *     /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 2      >/dev/null 2>&1 # Every 2 mins
-*/3 * * * *     /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 3      >/dev/null 2>&1 # Every 3 mins
-*/4 * * * *     /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 4      >/dev/null 2>&1 # Every 4 mins
-*/5 * * * *     /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 5      >/dev/null 2>&1 # Every 5 mins
-*/6 * * * *     /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 6      >/dev/null 2>&1 # Every 6 mins
-*/10 * * * *    /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 10     >/dev/null 2>&1 # Every 10 mins
-*/15 * * * *    /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 15     >/dev/null 2>&1 # Every 15 mins
-*/20 * * * *    /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 20     >/dev/null 2>&1 # Every 20 mins
-*/30 * * * *    /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 30     >/dev/null 2>&1 # Every 30 mins
-0 * * * *       /usr/bin/php    /var/www/uptime/uptime-monitor.php -t 60     >/dev/null 2>&1 # Every hour
+* * * * *       /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 1      >/dev/null 2>&1 # Every min
+*/2 * * * *     /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 2      >/dev/null 2>&1 # Every 2 mins
+*/3 * * * *     /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 3      >/dev/null 2>&1 # Every 3 mins
+*/4 * * * *     /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 4      >/dev/null 2>&1 # Every 4 mins
+*/5 * * * *     /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 5      >/dev/null 2>&1 # Every 5 mins
+*/6 * * * *     /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 6      >/dev/null 2>&1 # Every 6 mins
+*/10 * * * *    /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 10     >/dev/null 2>&1 # Every 10 mins
+*/15 * * * *    /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 15     >/dev/null 2>&1 # Every 15 mins
+*/20 * * * *    /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 20     >/dev/null 2>&1 # Every 20 mins
+*/30 * * * *    /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 30     >/dev/null 2>&1 # Every 30 mins
+0 * * * *       /usr/bin/php    /var/www/uptimon/uptime-monitor.php -t 60     >/dev/null 2>&1 # Every hour

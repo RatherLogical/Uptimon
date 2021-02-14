@@ -10,14 +10,14 @@ class Database
     private $db_password = DATABASE_PASSWORD; // Password for the database User
 
     // Inserts the uptime data into the database
-    // $d0 = Response Time, $d1 = Status (Online/Offline), $d2 = Timestamp, $d3 = Table Name
-    public function insertLastUptimeInfo($d0, $d1, $d2, $d3)
+    // $d0 = Response Time, $d1 = SSL Status, $d2 = Status (Online/Offline), $d3 = Timestamp, $d4 = Table Name
+    public function insertLastUptimeInfo($d0, $d1, $d2, $d3, $d4)
     {
         $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
 
-        $stmt = $conn->prepare("INSERT INTO `$d3` (`resp_time`, `status`, `timestamp`) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO `$d4` (`resp_time`, `ssl_status`, `status`, `timestamp`) VALUES (?, ?, ?, ?)");
 
-        $stmt->bind_param("iss", $d0, $d1, $d2);
+        $stmt->bind_param("isss", $d0, $d1, $d2, $d3);
 
         $stmt->execute();
 
@@ -70,6 +70,53 @@ class Database
             return $data;
         }
     }
+
+
+
+
+    // Get the current SSL status of a service
+    public function SSL_Status($d0)
+    {
+        $case = 0;
+        $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
+
+        // If this service exists in the database
+        if ($this->table_exists($d0, $conn)) {
+            $serviceStatus = null;
+
+            $sql = "SELECT status FROM `$d0` ORDER BY id DESC LIMIT 1";
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $serviceStatus = $row["ssl_status"];
+                }
+                $case = 1;
+            }
+            $conn->close();
+        }
+
+        if ($case) {
+            return $this->sendSSL_Status($serviceStatus);
+        } else {
+            return false;
+        }
+    }
+
+    private function sendSSL_Status($d0)
+    {
+        if ($d0 == 1) {
+            return "VALID";
+        } else if ($d0 == 0) {
+            return "INVALID";
+        } else {
+            return "N/A";
+        }
+    }
+
+
+
 
     // Get the average uptime over the last 24H
     public function averageResponseTime24h($d0)
@@ -218,7 +265,7 @@ class Database
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $serviceStatus = number_format($row["status"]);
+                    $serviceStatus = $row["status"];
                 }
                 $case = 1;
             }
@@ -259,7 +306,7 @@ class Database
         $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
 
         if (!$this->table_exists($d0, $conn)) {
-            $sql = "CREATE TABLE `$d0` (`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, `resp_time` INT(4) NOT NULL, `status` BOOLEAN NOT NULL, `timestamp` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB";
+            $sql = "CREATE TABLE `$d0` (`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, `resp_time` INT(4) NOT NULL, `ssl_status` BOOLEAN, `status` BOOLEAN NOT NULL, `timestamp` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB";
 
             if ($conn->query($sql) === true) {
                 echo "Table $d0 created successfully.<br>";

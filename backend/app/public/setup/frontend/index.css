@@ -36,6 +36,7 @@ body {
     padding: 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
     width: fit-content;
+    width: -moz-max-content;
     margin: 0 auto;
 }
 
@@ -101,6 +102,7 @@ a {
 
 .buttonContainer {
     width: fit-content;
+    width: -moz-max-content;
     margin: 0 auto;
 }
 

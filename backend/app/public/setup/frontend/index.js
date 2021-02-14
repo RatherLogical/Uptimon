@@ -33,11 +33,11 @@ function checkRequiredFields() {
     }
 
     if (document.getElementById('db_name').value === "") {
-        db_name.value = 'status';
+        db_name.value = 'uptimon';
     }
 
     if (document.getElementById('db_user').value === "") {
-        db_user.value = 'status';
+        db_user.value = 'uptimon';
     }
 
     if (document.getElementById('db_pass').value === "") {
@@ -160,7 +160,7 @@ function createConfigFile(timezone, db_host, db_name, db_user, db_pass, admin_em
               }
             });
 
-            xhr.open("POST", `https://status.dzltest.com/setup/backend/setup.php?type=createConfig&config_data=${configData}`);
+            xhr.open("POST", `/setup/backend/setup.php?type=createConfig&config_data=${configData}`);
             xhr.timeout = XHR_TIMEOUT;
             xhr.addEventListener("ontimeout", function(e) {
                console.log(e);

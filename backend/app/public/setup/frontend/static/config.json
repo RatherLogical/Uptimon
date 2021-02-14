@@ -17,7 +17,7 @@
         },
         {
             "check_interval": "1",
-            "domain_ip": "111.222.333.444",
+            "domain_ip": "111.222.222.222",
             "service_name": "A Dead IP"
         },
         {
