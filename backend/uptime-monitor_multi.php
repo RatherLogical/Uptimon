@@ -93,13 +93,10 @@ function serverResponseTime($checks, $tInt)
 
     // get content and remove handles
     for($i = 0; $i < $check_targets_count; $i++) {
-        //curl_multi_getcontent($curl_transfer[$i]);
-
         $date = date("Y-m-d H:i:s");
 
         $remote_response  = curl_getinfo($curl_transfer[$i]);
 
-        //$remote_URI = $remote_response['url'];
         $remote_HTTP_status = $remote_response['http_code'];
         $remote_SSL_status = $remote_response['ssl_verify_result'];
         $remote_response_time = $remote_response['starttransfer_time'] * 1000;
@@ -112,35 +109,20 @@ function serverResponseTime($checks, $tInt)
         if ($remote_scheme === 'HTTP') { // If connection scheme is HTTP
             $remote_SSL_status = NULL; // SSL Status is not applicable for non-ssl checks
             if ($remote_HTTP_status <= 301) { // Service offline, ssl invalid
-
-                echo "ONLINE | " . round($remote_response_time, 0) . "MS " . $date . " " . $url . "\n";
-
                 $db->insertLastUptimeInfo(round($remote_response_time, 0), $remote_SSL_status, 1, $date, $url);
             } else if ($remote_HTTP_status === 0 || $remote_HTTP_status > 301) { // Service offline
-
-                echo "OFFLINE | " . $date . " " . $url . "\n";
-
                 $db->insertLastUptimeInfo(0, $remote_SSL_status, 0, $date, $url);
             }
         } else if ($remote_scheme === 'HTTPS') { // If connection scheme is HTTPS
             if ($remote_HTTP_status <= 301 && $remote_SSL_status === 0) { // Service online, ssl valid
                 $remote_SSL_status = 1; // A valid SSL certificate was discovered
-
-                echo "ONLINE | SSL VALID | " . round($remote_response_time, 0) . "MS " . $date . " " . $url . "\n";
-
                 $db->insertLastUptimeInfo(round($remote_response_time, 0), $remote_SSL_status, 1, $date, $url);
             } else if ($remote_HTTP_status <= 301 && $remote_SSL_status !== 0) { // Service offline, ssl invalid
                 $remote_SSL_status = 0; // An invalid SSL certificate was discovered
-
-                echo "OFFLINE | SSL INVALID | " . $date . " " . $url . "\n";
-
                 $db->insertLastUptimeInfo(0, $remote_SSL_status, 0, $date, $url);
             }
         } else { // Service offline, connection scheme unknown
             $remote_SSL_status = NULL; // SSL Status is not known
-
-            echo "OFFLINE | " . $date . " " . $url . "\n";
-
             $db->insertLastUptimeInfo(0, $remote_SSL_status, 0, $date, $url);
         }
 

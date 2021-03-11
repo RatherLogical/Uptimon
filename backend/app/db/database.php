@@ -71,9 +71,6 @@ class Database
         }
     }
 
-
-
-
     // Get the current SSL status of a service
     public function SSL_Status($d0)
     {
@@ -114,9 +111,6 @@ class Database
             return "N/A";
         }
     }
-
-
-
 
     // Get the average uptime over the last 24H
     public function averageResponseTime24h($d0)

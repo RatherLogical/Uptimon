@@ -250,7 +250,6 @@ function getServices(type) {
 
         // Get All Services
         let services = await getAPI_Data(`${apiURL}/${apiPath}/list-services/`);
-        console.log(services);
         // Convert stringified JSON to parsed JSON
         services = JSON.parse(services);
 
@@ -278,8 +277,6 @@ function getServices(type) {
             let lastChecked = await getAPI_Data(
                 `${apiURL}/${apiPath}/last-checked/?target=${item.target}`
             );
-
-            console.log(lastChecked);
 
             if (!isNaN(lastChecked)) {
                 lastChecked = new Date(Number(lastChecked));
