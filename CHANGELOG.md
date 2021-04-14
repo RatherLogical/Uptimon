@@ -19,6 +19,16 @@
 - **FIX** The cURL timeout works now. ***DONE***
 - **FIX** If an invalid IP or domain is added as a check, give a friendly error instead of breaking. ***IN QUEUE***
 
+# v0.0.3 - Beta 2.5
+- **ADDED** Added an overall status indicator at the top of the page for at-a-glance status info.
+- **ADDED** A fully customizable header.
+  * Able to set a custom logo in SVG and PNG format by replacing the "logo.png" and "logo.svg" files.
+  * Able to set the status page heading text.
+  * Able to set the status page description.
+- **FRONTEND** More options to customize the colors.
+- **FRONTEND** "Live Update Enabled" text is now hidden if live update is not enabled.
+- **FRONTEND** Added a slight text shadow to improve legibility of text.
+
 # v0.0.3 - Beta 2
 
 - **FRONTEND** Uptimon client is now fully responsive across all device screen sizes!
