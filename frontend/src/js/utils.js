@@ -51,7 +51,7 @@ export function updateBottomStatus(text, complete = false) {
     }
 }
 
-export function setOverallServiceStatus(type) {
+export function setOverallServiceStatus(type, verbosity) {
     if (type === "all_operational") {
         // Set icon
         document.getElementById("overallStatusIcon").innerHTML =
@@ -64,6 +64,10 @@ export function setOverallServiceStatus(type) {
         // Set text
         document.getElementById("overallStatusText").innerHTML =
             "<p>All systems operational.</p>";
+        // Log data
+        if (verbosity) {
+            console.log("Overall Status: All online");
+        }
     } else if (type === "partial_outage") {
         // Set icon
         document.getElementById("overallStatusIcon").innerHTML =
@@ -76,6 +80,10 @@ export function setOverallServiceStatus(type) {
         // Set text
         document.getElementById("overallStatusText").innerHTML =
             "<p>Partial outage.</p>";
+        // Log data
+        if (verbosity) {
+            console.log("Overall Status: Partial outage");
+        }
     } else if (type === "total_outage") {
         // Set icon
         document.getElementById("overallStatusIcon").innerHTML =
@@ -88,6 +96,10 @@ export function setOverallServiceStatus(type) {
         // Set text
         document.getElementById("overallStatusText").innerHTML =
             "<p>Total outage.</p>";
+        // Log data
+        if (verbosity) {
+            console.log("Overall Status: All offline");
+        }
     }
 
     function removeAllClasses() {

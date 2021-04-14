@@ -83,6 +83,10 @@ function serverResponseTime($checks, $tInt)
         curl_setopt($curl_transfer[$i], CURLOPT_RETURNTRANSFER, false); // TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it directly
         curl_setopt($curl_transfer[$i], CURLOPT_NOBODY, true); // Does the download request without getting the body
         curl_setopt($curl_transfer[$i], CURLOPT_TIMEOUT, 5); // CURL_TIMEOUT set in config.php
+        curl_setopt($curl_transfer[$i], CURLOPT_FRESH_CONNECT, TRUE); // Force the use of a new connection instead of a cached one
+
+        // Should ensure that a valid and up to date response will be returned
+        curl_setopt($curl_transfer[$i], CURLOPT_HTTPHEADER, array("Cache-Control: no-cache, must-revalidate"));
 
         curl_multi_add_handle($curl_multi, $curl_transfer[$i]); // Assign a normal cURL handle to a cURL multi handle
     }

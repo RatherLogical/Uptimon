@@ -351,13 +351,13 @@ function getServices(type) {
 
             if (verbosity) {
                 console.log("Title:", item.title);
-                console.log("Safe Name", safeName);
-                console.log("Target", item.target);
-                console.log("Status", status);
-                console.log("Response Times", respTimes);
-                console.log("Average Response Time", avgRespTime);
-                console.log("Uptime", uptime);
-                console.log("Last Checked", lastChecked);
+                console.log("Safe Name:", safeName);
+                console.log("Target:", item.target);
+                console.log("Status:", status);
+                console.log("Response Times:", respTimes);
+                console.log("Average Response Time:", avgRespTime);
+                console.log("Uptime:", uptime);
+                console.log("Last Checked:", lastChecked);
                 console.log("-----------------------------");
             }
 
@@ -416,18 +416,14 @@ function getServices(type) {
             });
 
             if (anyServiceMixed) {
-                console.log("Services mixed A");
-                setOverallServiceStatus("partial_outage");
+                setOverallServiceStatus("partial_outage", verbosity);
             } else {
                 if (allServicesOnline) {
-                    console.log("All online");
-                    setOverallServiceStatus("all_operational");
+                    setOverallServiceStatus("all_operational", verbosity);
                 } else if (allServicesOffline) {
-                    console.log("All offline");
-                    setOverallServiceStatus("total_outage");
+                    setOverallServiceStatus("total_outage", verbosity);
                 } else if (!allServicesOnline && !allServicesOffline) {
-                    console.log("Services mixed B");
-                    setOverallServiceStatus("partial_outage");
+                    setOverallServiceStatus("partial_outage", verbosity);
                 }
             }
         } else {

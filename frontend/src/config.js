@@ -1,5 +1,5 @@
 window.uptimon_config = {
-    api_base_url: "https://status.example.com", // The URL of the Uptimon backend installation (no trailing slash).
+    api_base_url: "https://status.uptimon.com", // The URL of the Uptimon backend installation (no trailing slash).
     page_title: "Uptimon Status", // The title of the page
     page_description:
         "On this site, you'll find status reports about Uptimon's products and services. Log into your account on the Uptimon administration interface to subscribe to email notifications about status reports which affect specific products.", // The description shown at the top of the page.
