@@ -81,7 +81,7 @@ class Database
         if ($this->table_exists($d0, $conn)) {
             $serviceStatus = null;
 
-            $sql = "SELECT status FROM `$d0` ORDER BY id DESC LIMIT 1";
+            $sql = "SELECT ssl_status FROM `$d0` ORDER BY id DESC LIMIT 1";
 
             $result = $conn->query($sql);
 
@@ -103,9 +103,9 @@ class Database
 
     private function sendSSL_Status($d0)
     {
-        if ($d0 == 1) {
+        if ($d0 === "1") {
             return "VALID";
-        } else if ($d0 == 0) {
+        } else if ($d0 === "0") {
             return "INVALID";
         } else {
             return "N/A";

@@ -349,10 +349,16 @@ function getServices(type) {
                 respTimes = [];
             }
 
+            // Get SSL status
+            let sslStatus = await getAPI_Data(
+                `${apiURL}/${apiPath}/ssl-status/?target=${item.target}`
+            );
+
             if (verbosity) {
                 console.log("Title:", item.title);
                 console.log("Safe Name:", safeName);
                 console.log("Target:", item.target);
+                console.log("SSL Status:", sslStatus);
                 console.log("Status:", status);
                 console.log("Response Times:", respTimes);
                 console.log("Average Response Time:", avgRespTime);
@@ -367,6 +373,7 @@ function getServices(type) {
                     title: item.title,
                     safeName: safeName,
                     target: item.target,
+                    sslStatus: sslStatus,
                     status: status,
                     respTimes: respTimes,
                     avgRespTime: avgRespTime,
@@ -380,6 +387,7 @@ function getServices(type) {
 
                     // Ensure We Are Updating The Correct Service
                     if (item.safeName === safeName) {
+                        item.sslStatus = sslStatus;
                         item.status = status;
                         item.respTimes = respTimes;
                         item.avgRespTime = avgRespTime;
@@ -454,6 +462,7 @@ function initializeServices() {
             await generateServiceHTML(
                 item.title,
                 item.safeName,
+                item.sslStatus,
                 item.status,
                 item.avgRespTime,
                 item.uptime,
@@ -486,82 +495,66 @@ function updateServices() {
         for (let i = 0; i < service_statuses.length; i++) {
             const item = service_statuses[i];
 
+            if (item.sslStatus === "VALID") {
+                removeSSL_StatusClasses(`${item.safeName}_sslStatus`);
+                document
+                    .getElementById(`${item.safeName}_sslStatus`)
+                    .classList.add("sslValid");
+                document.getElementById(
+                    `${item.safeName}_sslStatus`
+                ).innerHTML = '<i class="fad fa-lock"></i>';
+            } else if (item.sslStatus === "INVALID") {
+                removeSSL_StatusClasses(`${item.safeName}_sslStatus`);
+                document
+                    .getElementById(`${item.safeName}_sslStatus`)
+                    .classList.add("sslInvalid");
+                document.getElementById(
+                    `${item.safeName}_sslStatus`
+                ).innerHTML = '<i class="fad fa-lock-open"></i>';
+            } else if (item.sslStatus === "N/A") {
+                removeSSL_StatusClasses(`${item.safeName}_sslStatus`);
+                document
+                    .getElementById(`${item.safeName}_sslStatus`)
+                    .classList.add("sslNA");
+                document.getElementById(
+                    `${item.safeName}_sslStatus`
+                ).innerHTML = '<i class="fad fa-lock-open"></i>';
+            }
+
             let statusClass, statusText;
             if (item.status === "ONLINE") {
                 statusClass = "serviceOnline";
                 statusText = "ONLINE";
 
                 // Update Online/Offline Status
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.remove("serviceOffline");
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.remove("serviceNotAvailable");
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.add("serviceOnline");
+                removeStatusClasses(`${item.safeName}_status`);
+                addStatusClass("online", `${item.safeName}_status`);
 
                 // Update Below Chart
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.remove("serviceOffline");
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.remove("serviceNotAvailable");
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.add("serviceOnline");
+                removeStatusClasses(`${item.safeName}_belowChart`);
+                addStatusClass("online", `${item.safeName}_belowChart`);
             } else if (item.status === "OFFLINE") {
                 statusClass = "serviceOffline";
                 statusText = "OFFLINE";
 
                 // Update Online/Offline Status
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.remove("serviceOnline");
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.remove("serviceNotAvailable");
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.add("serviceOffline");
+                removeStatusClasses(`${item.safeName}_status`);
+                addStatusClass("offline", `${item.safeName}_status`);
 
                 // Update Below Chart
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.remove("serviceOnline");
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.remove("serviceNotAvailable");
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.add("serviceOffline");
+                removeStatusClasses(`${item.safeName}_belowChart`);
+                addStatusClass("offline", `${item.safeName}_belowChart`);
             } else if (item.status === "N/A") {
                 statusClass = "serviceNotAvailable";
                 statusText = "N/A";
 
                 // Update Online/Offline Status
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.remove("serviceOnline");
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.remove("serviceOffline");
-                document
-                    .getElementById(`${item.safeName}_status`)
-                    .classList.add("serviceNotAvailable");
+                removeStatusClasses(`${item.safeName}_status`);
+                addStatusClass("n/a", `${item.safeName}_status`);
 
                 // Update Below Chart
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.remove("serviceOnline");
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.remove("serviceOffline");
-                document
-                    .getElementById(`${item.safeName}_belowChart`)
-                    .classList.add("serviceNotAvailable");
+                removeStatusClasses(`${item.safeName}_belowChart`);
+                addStatusClass("n/a", `${item.safeName}_belowChart`);
             }
 
             // Update This Service's Markup
@@ -587,17 +580,55 @@ function updateServices() {
         updateBottomStatus(null, true);
         resolve("done");
     });
+
+    // Remove status classes
+    function removeStatusClasses(id) {
+        document.getElementById(id).classList.remove("serviceOnline");
+        document.getElementById(id).classList.remove("serviceOffline");
+        document.getElementById(id).classList.remove("serviceNotAvailable");
+    }
+
+    // Add status class
+    function addStatusClass(type, id) {
+        if (type === "online") {
+            document.getElementById(id).classList.add("serviceOnline");
+        } else if (type === "offline") {
+            document.getElementById(id).classList.add("serviceOffline");
+        } else if (type === "n/a") {
+            document.getElementById(id).classList.add("serviceNotAvailable");
+        }
+    }
+
+    // Remove SSL Status classes
+    function removeSSL_StatusClasses(id) {
+        document.getElementById(id).classList.remove("sslValid");
+        document.getElementById(id).classList.remove("sslInvalid");
+        document.getElementById(id).classList.remove("sslNA");
+    }
 }
 
 function generateServiceHTML(
     title,
     safeName,
+    sslStatus,
     status,
     avgRespTime,
     uptime,
     lastChecked
 ) {
     return new Promise((resolve) => {
+        let sslStatusClass, sslStatusIcon;
+        if (sslStatus === "VALID") {
+            sslStatusClass = 'sslValid';
+            sslStatusIcon = '<i class="fad fa-lock"></i>';
+        } else if (sslStatus === "INVALID") {
+            sslStatusClass = 'sslInvalid';
+            sslStatusIcon = '<i class="fad fa-lock-open"></i>';
+        } else if (sslStatus === "N/A") {
+            sslStatusClass = 'sslNA';
+            sslStatusIcon = '<i class="fad fa-lock-open"></i>';
+        }
+
         let statusClass, statusText;
         if (status === "ONLINE") {
             statusClass = "serviceOnline";
@@ -614,6 +645,7 @@ function generateServiceHTML(
         <div class="chartOuter" id="${safeName}">
             <div class="aboveChart">
                 <div class="aboveChartOuter serviceNameOuter">
+                    <div class="sslStatus ${sslStatusClass}" id="${safeName}_sslStatus">${sslStatusIcon}</div>
                     <div class="aboveChartInnerItem serviceName">${title}</div>
                 </div>
                 <div class="aboveChartOuter responseTimeOuter">

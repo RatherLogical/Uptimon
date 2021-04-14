@@ -158,6 +158,25 @@ body {
     display: flex;
 }
 
+/* SSL Status */
+.sslStatus {
+    padding: 10px;
+    border-radius: 0.8rem;
+    margin: 0 0 0 10px;
+}
+
+.sslStatus.sslValid {
+    background-color: var(--online_primary_color);
+}
+
+.sslStatus.sslInvalid {
+    background-color: var(--offline_primary_color);
+}
+
+.sslStatus.sslNA {
+    background-color: var(--not_available_color);
+}
+
 .aboveChartOuter {
     width: fit-content;
     background-color: var(--service_info_accent_color);
