@@ -20,7 +20,6 @@ import { sha256 } from "js-sha256";
 
 // Import styles
 import "./css/index.sass";
-import { doc } from "prettier";
 
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
@@ -391,14 +390,18 @@ function getServices(type) {
             }
         }
 
-        let overallStatus = await getAPI_Data(`${apiURL}/${apiPath}/overall-status/`);
+        let overallStatus = await getAPI_Data(
+            `${apiURL}/${apiPath}/overall-status/`
+        );
 
         if (overallStatus !== "N/A") {
             overallStatus = JSON.parse(overallStatus);
 
-            let allServicesOnline = true, allServicesOffline = true, anyServiceMixed = false;
+            let allServicesOnline = true,
+                allServicesOffline = true,
+                anyServiceMixed = false;
 
-            overallStatus.forEach(function(item) {
+            overallStatus.forEach(function (item) {
                 if (item === "N/A") {
                     anyServiceMixed = true;
                 }
@@ -413,22 +416,22 @@ function getServices(type) {
             });
 
             if (anyServiceMixed) {
-                console.log('Services mixed A');
-                setOverallServiceStatus('partial_outage');
+                console.log("Services mixed A");
+                setOverallServiceStatus("partial_outage");
             } else {
                 if (allServicesOnline) {
-                    console.log('All online');
-                    setOverallServiceStatus('all_operational');
+                    console.log("All online");
+                    setOverallServiceStatus("all_operational");
                 } else if (allServicesOffline) {
-                    console.log('All offline');
-                    setOverallServiceStatus('total_outage');
+                    console.log("All offline");
+                    setOverallServiceStatus("total_outage");
                 } else if (!allServicesOnline && !allServicesOffline) {
-                    console.log('Services mixed B');
-                    setOverallServiceStatus('partial_outage');
+                    console.log("Services mixed B");
+                    setOverallServiceStatus("partial_outage");
                 }
             }
         } else {
-            setOverallServiceStatus('total_outage');
+            setOverallServiceStatus("total_outage");
         }
 
         if (type === "initialize") {

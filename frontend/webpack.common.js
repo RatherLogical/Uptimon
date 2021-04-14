@@ -44,6 +44,9 @@ module.exports = {
             },
             {
                 test: /\.(svg|eot|woff|woff2|ttf)$/,
+                exclude: [
+                    path.resolve(__dirname, "./src/img")
+                ],
                 loader: 'file-loader',
                 options: {
                     publicPath: '../',
@@ -51,11 +54,14 @@ module.exports = {
                 },
             },
             {
-                test: /\.(png|jpg|jpeg)$/,
+                test: /\.(png|jpg|jpeg|svg)$/,
+                exclude: [
+                    path.resolve(__dirname, "./src/css")
+                ],
                 loader: 'file-loader',
                 options: {
-                    publicPath: './',
-                    name: 'img/[name].[contenthash].[ext]',
+                    publicPath: '../',
+                    name: 'img/[name].[ext]',
                 },
             }
         ]
