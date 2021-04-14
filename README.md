@@ -3,7 +3,7 @@
 **Screenshots**
 
 # Some Services
-![Some Online Services](https://github.com/RatherLogical/Uptimon/raw/master/images/screenshot_1.png)
+![Some Online Services](https://github.com/RatherLogical/Uptimon/raw/master/images/image.png)
 
 # An Offline Service
 ![An Offline Service](https://github.com/RatherLogical/Uptimon/raw/master/images/screenshot_2.png)
