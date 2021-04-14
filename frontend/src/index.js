@@ -9,6 +9,7 @@ import {
     showLoader,
     hideLoader,
     updateBottomStatus,
+    setOverallServiceStatus,
 } from "./js/utils";
 
 if (__MODE__ === "development") {
@@ -19,6 +20,7 @@ import { sha256 } from "js-sha256";
 
 // Import styles
 import "./css/index.sass";
+import { doc } from "prettier";
 
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
@@ -28,6 +30,14 @@ let apiURL = global.uptimon_config.api_base_url,
     apiPath = global.uptimon_config.api_base_path,
     verbosity = global.uptimon_config.verbose_logging,
     dataPoints = global.uptimon_config.shown_data_points,
+    pageTitle = global.uptimon_config.page_title,
+    pageDescription = global.uptimon_config.page_description,
+    pageBackgroundColor = global.uptimon_config.page_background_color,
+    pageFontColor = global.uptimon_config.page_font_color,
+    serviceInfoBackgroundColor =
+        global.uptimon_config.service_info_background_color,
+    serviceInfoAccentColor = global.uptimon_config.service_info_accent_color,
+    chartBackgroundColor = global.uptimon_config.chart_background_color,
     onlineColorA = global.uptimon_config.online_primary_color,
     onlineColorB = global.uptimon_config.online_secondary_color,
     offlineColorA = global.uptimon_config.offline_primary_color,
@@ -43,11 +53,19 @@ window.addEventListener("load", function () {
 
 async function initialize() {
     updateCSS();
+    // Set the page title
+    document.getElementById("pageTitle").innerText = `${pageTitle}`;
+    document.getElementById("pageDescriptionTitle").innerText = `${pageTitle}`;
+    // Set the page description
+    document.getElementById("pageDescription").innerText = `${pageDescription}`;
     getServices("initialize");
     if (uptimon_config.live_update) {
+        document.getElementById("bottomStatusBar").style.display = "";
         setInterval(async function () {
             await getServices("update");
         }, uptimon_config.live_update_interval);
+    } else {
+        document.getElementById("bottomStatusBar").style.display = "none";
     }
 }
 
@@ -55,6 +73,17 @@ async function initialize() {
 function updateCSS() {
     let root = document.documentElement;
 
+    root.style.setProperty("--page_background_color", pageBackgroundColor);
+    root.style.setProperty("--page_font_color", pageFontColor);
+    root.style.setProperty(
+        "--service_info_background_color",
+        serviceInfoBackgroundColor
+    );
+    root.style.setProperty(
+        "--service_info_accent_color",
+        serviceInfoAccentColor
+    );
+    root.style.setProperty("--chart_background_color", chartBackgroundColor);
     root.style.setProperty("--online_primary_color", onlineColorA);
     root.style.setProperty("--online_secondary_color", onlineColorB);
     root.style.setProperty("--offline_primary_color", offlineColorA);
@@ -360,6 +389,46 @@ function getServices(type) {
                     }
                 }
             }
+        }
+
+        let overallStatus = await getAPI_Data(`${apiURL}/${apiPath}/overall-status/`);
+
+        if (overallStatus !== "N/A") {
+            overallStatus = JSON.parse(overallStatus);
+
+            let allServicesOnline = true, allServicesOffline = true, anyServiceMixed = false;
+
+            overallStatus.forEach(function(item) {
+                if (item === "N/A") {
+                    anyServiceMixed = true;
+                }
+
+                if (item !== "ONLINE") {
+                    allServicesOnline = false;
+                }
+
+                if (item !== "OFFLINE") {
+                    allServicesOffline = false;
+                }
+            });
+
+            if (anyServiceMixed) {
+                console.log('Services mixed A');
+                setOverallServiceStatus('partial_outage');
+            } else {
+                if (allServicesOnline) {
+                    console.log('All online');
+                    setOverallServiceStatus('all_operational');
+                } else if (allServicesOffline) {
+                    console.log('All offline');
+                    setOverallServiceStatus('total_outage');
+                } else if (!allServicesOnline && !allServicesOffline) {
+                    console.log('Services mixed B');
+                    setOverallServiceStatus('partial_outage');
+                }
+            }
+        } else {
+            setOverallServiceStatus('total_outage');
         }
 
         if (type === "initialize") {

@@ -1,5 +1,7 @@
 "use strict";
 
+import { doc } from "prettier";
+
 export function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -46,5 +48,39 @@ export function updateBottomStatus(text, complete = false) {
         }, 5000);
     } else {
         document.getElementById("liveUpdateText").innerHTML = text;
+    }
+}
+
+export function setOverallServiceStatus(type) {
+    if (type === 'all_operational') {
+        // Set icon
+        document.getElementById('overallStatusIcon').innerHTML = '<i class="far fa-check"></i>';
+        // Set icon class
+        removeAllClasses();
+        document.getElementById('overallStatusIcon').classList.add('allOperational');
+        // Set text
+        document.getElementById('overallStatusText').innerHTML = '<p>All systems operational.</p>';
+    } else if (type === 'partial_outage') {
+        // Set icon
+        document.getElementById('overallStatusIcon').innerHTML = '<i class="fad fa-exclamation"></i>';
+        // Set icon class
+        removeAllClasses();
+        document.getElementById('overallStatusIcon').classList.add('partialOutage');
+        // Set text
+        document.getElementById('overallStatusText').innerHTML = '<p>Partial outage.</p>';
+    } else if (type === 'total_outage') {
+        // Set icon
+        document.getElementById('overallStatusIcon').innerHTML = '<i class="far fa-times"></i>';
+        // Set icon class
+        removeAllClasses();
+        document.getElementById('overallStatusIcon').classList.add('totalOutage');
+        // Set text
+        document.getElementById('overallStatusText').innerHTML = '<p>Total outage.</p>';
+    }
+
+    function removeAllClasses() {
+        document.getElementById('overallStatusIcon').classList.remove('allOperational');
+        document.getElementById('overallStatusIcon').classList.remove('partialOutage');
+        document.getElementById('overallStatusIcon').classList.remove('totalOutage');
     }
 }

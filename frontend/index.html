@@ -8,13 +8,33 @@
 </head>
 
 <body class="standard" id="pageBody">
+    <!-- Loading indicator -->
     <div class="loader" id="loader">
         Loading
     </div>
+
+    <!-- Page header -->
+    <div class="header">
+        <div class="upperHeader">
+            <div class="container upperHeaderLogo"></div>
+        </div>
+        <div class="middleHeader">
+            <div class="container pageDescriptionTitle" id="pageDescriptionTitle"></div>
+            <div class="container pageDescription" id="pageDescription"></div>
+        </div>
+        <div class="container">
+            <div class="row ml-0 mr-0 overallStatus">
+                <div class="overallStatusIcon partialOutage" id="overallStatusIcon"><i class="fad fa-spinner-third fa-spin"></i></div>
+                <div class="col overallStatusText" id="overallStatusText"><p>Loading overall status.</p></div>
+            </div>
+        </div>
+    </div>
+    <!-- Main page content -->
     <div class="container">
         <div class="pageContainer" id="pageContainer"></div>
     </div>
-    <div class="bottomStatusBar">
+    <!-- Live update indicator -->
+    <div class="bottomStatusBar" id="bottomStatusBar" style="display: none;">
         <div class="bottomStatusBarContent">
             <div class="liveUpdatePing"></div>
             <div id="liveUpdateText">Live Update Enabled</div>

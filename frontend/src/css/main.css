@@ -1,11 +1,3 @@
-:root {
-    --online_primary_color: #47d337;
-    --online_secondary_color: #3ab42d;
-    --offline_primary_color: #eb1c22;
-    --offline_secondary_color: #ff252c;
-    --not_available_color: #666666;
-}
-
 @font-face {
     font-family: "Ubuntu";
     font-style: normal;
@@ -15,13 +7,14 @@
 }
 
 body {
-    background-color: #212121;
-    color: #ffffff;
+    background-color: var(--page_background_color);
+    color: var(--page_font_color);
     font-family: "Ubuntu" !important;
     font-weight: normal;
     font-size: 18px;
     font-weight: 400;
     line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Loading Indicator */
@@ -49,13 +42,83 @@ body {
 }
 
 /* Header Styles */
+.upperHeader {
+    background-color: #333333;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 80%);
+    height: 70px;
+    padding: 8px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.upperHeaderLogo {
+    background: url("../img/logo.png");
+    background: url("../img/logo.svg"),
+        linear-gradient(transparent, transparent);
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.middleHeader {
+    background-color: #333333;
+    padding: 40px 0px 60.5px 0;
+}
+
+.pageDescriptionTitle {
+    font-size: 28px;
+    line-height: 2;
+    font-weight: bold;
+}
+
+.pageDescription {
+    font-size: 15px;
+    line-height: 1.3;
+}
+
+.overallStatus {
+    background-color: #333333;
+    border-radius: 0.8rem;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 80%);
+    overflow: hidden;
+    margin-top: -21px;
+}
+
+.overallStatusText > p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+
+.overallStatusIcon {
+    padding: 12px;
+}
+
+.overallStatusIcon.allOperational {
+    background-color: var(--online_primary_color);
+}
+
+.overallStatusIcon.partialOutage {
+    background-color: var(--not_available_color);
+}
+
+.overallStatusIcon.totalOutage {
+    background-color: var(--offline_primary_color);
+}
+
+.overallStatusText {
+    font-size: 20px;
+}
+
+/* Main page content styles */
 .pageContainer {
     margin-top: 50px;
     margin-bottom: 50px;
 }
 
 .chartOuter {
-    background-color: #333333;
+    background-color: var(--chart_background_color);
     padding: 10px 0 0 0;
     border-radius: 0.8rem;
     overflow: hidden;
@@ -79,7 +142,7 @@ body {
     left: 0;
     height: 70px;
     width: 100%;
-    background-color: #212121;
+    background-color: var(--service_info_background_color);
 }
 
 .belowChart {
@@ -97,13 +160,13 @@ body {
 
 .aboveChartOuter {
     width: fit-content;
-    background-color: #333333;
+    background-color: var(--service_info_accent_color);
     height: 67px;
 }
 
 .aboveChartOuter ~ .aboveChartOuter {
     width: fit-content;
-    background-color: #333333;
+    background-color: var(--service_info_accent_color);
     height: 67px;
     margin-left: 3px;
 }
