@@ -163,6 +163,8 @@ body {
     padding: 10px;
     border-radius: 0.8rem;
     margin: 0 0 0 10px;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .sslStatus.sslValid {
@@ -203,6 +205,8 @@ body {
 .serviceName {
     font-size: 28px;
     padding: 0 10px;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .responseTimeNumber {
@@ -347,7 +351,7 @@ body {
 
 @media screen and (max-width: 991px) {
     .serviceName {
-        max-width: 300px;
+        max-width: 230px;
     }
 }
 

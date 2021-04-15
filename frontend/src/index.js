@@ -24,11 +24,16 @@ import "./css/index.sass";
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
+import tippy from 'tippy.js';
+
+tippy.setDefaultProps({theme: 'material'});
+
 // Declare globals
 let apiURL = global.uptimon_config.api_base_url,
     apiPath = global.uptimon_config.api_base_path,
     verbosity = global.uptimon_config.verbose_logging,
     dataPoints = global.uptimon_config.shown_data_points,
+    enableTooltips = global.uptimon_config.enable_tooltips,
     pageTitle = global.uptimon_config.page_title,
     pageDescription = global.uptimon_config.page_description,
     pageBackgroundColor = global.uptimon_config.page_background_color,
@@ -461,6 +466,7 @@ function initializeServices() {
 
             await generateServiceHTML(
                 item.title,
+                item.target,
                 item.safeName,
                 item.sslStatus,
                 item.status,
@@ -483,6 +489,11 @@ function initializeServices() {
                 item.respTimes,
                 item.status
             );
+        }
+
+        // Add tooltips
+        if (enableTooltips) {
+            tippy('[data-tippy-content]');
         }
 
         resolve("done");
@@ -609,6 +620,7 @@ function updateServices() {
 
 function generateServiceHTML(
     title,
+    target,
     safeName,
     sslStatus,
     status,
@@ -617,16 +629,19 @@ function generateServiceHTML(
     lastChecked
 ) {
     return new Promise((resolve) => {
-        let sslStatusClass, sslStatusIcon;
+        let sslStatusClass, sslStatusIcon, sslStatusText;
         if (sslStatus === "VALID") {
             sslStatusClass = 'sslValid';
             sslStatusIcon = '<i class="fad fa-lock"></i>';
+            sslStatusText = 'This service has a valid SSL Certificate and was served over HTTPS.';
         } else if (sslStatus === "INVALID") {
             sslStatusClass = 'sslInvalid';
             sslStatusIcon = '<i class="fad fa-lock-open"></i>';
+            sslStatusText = 'This service has an invalid SSL Certificate.';
         } else if (sslStatus === "N/A") {
             sslStatusClass = 'sslNA';
             sslStatusIcon = '<i class="fad fa-lock-open"></i>';
+            sslStatusText = 'This service does not support SSL.';
         }
 
         let statusClass, statusText;
@@ -645,8 +660,8 @@ function generateServiceHTML(
         <div class="chartOuter" id="${safeName}">
             <div class="aboveChart">
                 <div class="aboveChartOuter serviceNameOuter">
-                    <div class="sslStatus ${sslStatusClass}" id="${safeName}_sslStatus">${sslStatusIcon}</div>
-                    <div class="aboveChartInnerItem serviceName">${title}</div>
+                    <div class="sslStatus ${sslStatusClass}" id="${safeName}_sslStatus" data-tippy-content="${sslStatusText}">${sslStatusIcon}</div>
+                    <div class="aboveChartInnerItem serviceName" data-tippy-content="${target}">${title}</div>
                 </div>
                 <div class="aboveChartOuter responseTimeOuter">
                     <div class="aboveChartInnerItem responseTimeNumber" id="${safeName}_avgRespTime">${avgRespTime}</div>

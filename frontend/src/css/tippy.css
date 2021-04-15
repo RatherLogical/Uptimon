@@ -1,0 +1,9 @@
+.tippy-box[data-theme~=material] {
+    background-color: #333333;
+    font-weight: 400;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 80%);
+}
+
+.tippy-box[data-theme~=material][data-placement^=top]>.tippy-arrow:before {
+    border-top-color: #333333;
+}

@@ -7,6 +7,7 @@ window.uptimon_config = {
     live_update: true, // Whether or not the status page should automatically check for new data.
     live_update_interval: 60000, // How often the status page should check for new data (in milliseconds).
     shown_data_points: 25, // The amount of data points to show on the chart (if the database contains more data points than the value of 'shown_data_points' the data will be decimated to accurately display relative highs and lows.).
+    enable_tooltips: true, // Whether or not to show tooltips when hovering over certain elements.
     page_background_color: "#212121", // The background color of the status page.
     page_font_color: "#ffffff", // The font color of the status page.
     service_info_background_color: "#212121", // The color of the service info background.
