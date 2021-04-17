@@ -24,29 +24,31 @@ import "./css/index.sass";
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
-import tippy from 'tippy.js';
+import tippy from "tippy.js";
 
-tippy.setDefaultProps({theme: 'material'});
+tippy.setDefaultProps({ theme: "material" });
 
 // Declare globals
 let apiURL = global.uptimon_config.api_base_url,
     apiPath = global.uptimon_config.api_base_path,
     verbosity = global.uptimon_config.verbose_logging,
-    dataPoints = global.uptimon_config.shown_data_points,
+    dataPoints = global.uptimon_config.chart.shown_data_points,
     enableTooltips = global.uptimon_config.enable_tooltips,
     pageTitle = global.uptimon_config.page_title,
     pageDescription = global.uptimon_config.page_description,
-    pageBackgroundColor = global.uptimon_config.page_background_color,
-    pageFontColor = global.uptimon_config.page_font_color,
+    pageBackgroundColor = global.uptimon_config.colors.page_background,
+    pageFontColor = global.uptimon_config.colors.page_font,
     serviceInfoBackgroundColor =
-        global.uptimon_config.service_info_background_color,
-    serviceInfoAccentColor = global.uptimon_config.service_info_accent_color,
-    chartBackgroundColor = global.uptimon_config.chart_background_color,
-    onlineColorA = global.uptimon_config.online_primary_color,
-    onlineColorB = global.uptimon_config.online_secondary_color,
-    offlineColorA = global.uptimon_config.offline_primary_color,
-    offlineColorB = global.uptimon_config.offline_secondary_color,
-    notAvailableColor = global.uptimon_config.not_available_color,
+        global.uptimon_config.colors.service_info_background,
+    serviceInfoAccentColor = global.uptimon_config.colors.service_info_accent,
+    chartBackgroundColor = global.uptimon_config.colors.chart_background,
+    onlineColorA = global.uptimon_config.colors.online_primary,
+    onlineColorB = global.uptimon_config.colors.online_secondary,
+    offlineColorA = global.uptimon_config.colors.offline_primary,
+    offlineColorB = global.uptimon_config.colors.offline_secondary,
+    notAvailableColor = global.uptimon_config.colors.not_available,
+    GA_Enabled = global.uptimon_config.analytics.GA_enabled,
+    GA_MeasurementID = global.uptimon_config.analytics.GA_measurement_id,
     service_statuses;
 
 let activeCharts = Array();
@@ -62,6 +64,25 @@ async function initialize() {
     document.getElementById("pageDescriptionTitle").innerText = `${pageTitle}`;
     // Set the page description
     document.getElementById("pageDescription").innerText = `${pageDescription}`;
+    // Determine whether to load Google Analytics
+    if (GA_Enabled) {
+        var script = document.createElement("script");
+        script.onload = function () {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", `${GA_MeasurementID}`);
+            if (verbosity) {
+                console.log("Google Analytics Loaded");
+            }
+        };
+        script.src = `https://www.googletagmanager.com/gtag/js?id=UA-${GA_MeasurementID}`;
+
+        document.head.appendChild(script); //or something of the likes
+    }
     getServices("initialize");
     if (uptimon_config.live_update) {
         document.getElementById("bottomStatusBar").style.display = "";
@@ -342,7 +363,7 @@ function getServices(type) {
                     chartWidth = respTimes.length;
                 } else {
                     // Otherwise Use The User Specified Data Point Amount
-                    chartWidth = uptimon_config.shown_data_points;
+                    chartWidth = dataPoints;
                 }
                 // Downsample The Data
                 respTimes = LTTB(respTimes, chartWidth);
@@ -493,7 +514,7 @@ function initializeServices() {
 
         // Add tooltips
         if (enableTooltips) {
-            tippy('[data-tippy-content]');
+            tippy("[data-tippy-content]");
         }
 
         resolve("done");
@@ -631,17 +652,18 @@ function generateServiceHTML(
     return new Promise((resolve) => {
         let sslStatusClass, sslStatusIcon, sslStatusText;
         if (sslStatus === "VALID") {
-            sslStatusClass = 'sslValid';
+            sslStatusClass = "sslValid";
             sslStatusIcon = '<i class="fad fa-lock"></i>';
-            sslStatusText = 'This service has a valid SSL Certificate and was served over HTTPS.';
+            sslStatusText =
+                "This service has a valid SSL Certificate and was served over HTTPS.";
         } else if (sslStatus === "INVALID") {
-            sslStatusClass = 'sslInvalid';
+            sslStatusClass = "sslInvalid";
             sslStatusIcon = '<i class="fad fa-lock-open"></i>';
-            sslStatusText = 'This service has an invalid SSL Certificate.';
+            sslStatusText = "This service has an invalid SSL Certificate.";
         } else if (sslStatus === "N/A") {
-            sslStatusClass = 'sslNA';
+            sslStatusClass = "sslNA";
             sslStatusIcon = '<i class="fad fa-lock-open"></i>';
-            sslStatusText = 'This service does not support SSL.';
+            sslStatusText = "This service does not support SSL.";
         }
 
         let statusClass, statusText;

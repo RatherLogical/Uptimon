@@ -1,5 +1,6 @@
 ![Uptimon Logo](https://github.com/RatherLogical/Uptimon/raw/master/images/uptimonLogo.png)
 
+# Visit the demo site! https://status.uptimon.com/
 # Join the Discord server! https://discord.gg/EH5QVwPdDa
 
 **Screenshots**

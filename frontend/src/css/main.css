@@ -1,3 +1,12 @@
+@keyframes shadow-pulse {
+    0% {
+        box-shadow: 0 0 0 0px var(--online_primary_color);
+    }
+    100% {
+        box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+    }
+}
+
 @font-face {
     font-family: "Ubuntu";
     font-style: normal;
@@ -24,21 +33,12 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    font-size: 4vw;
+    font-size: 20px;
     background-color: #212121;
-    padding: 20px;
+    padding: 15px;
     border-radius: 0.8rem;
-    text-align: center;
     animation: shadow-pulse 1s infinite;
-}
-
-@keyframes shadow-pulse {
-    0% {
-        box-shadow: 0 0 0 0px var(--online_primary_color);
-    }
-    100% {
-        box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
-    }
+    white-space: nowrap;
 }
 
 /* Header Styles */
@@ -51,10 +51,17 @@ body {
     z-index: 2;
 }
 
+.upperHeaderContent {
+    height: 100%;
+}
+
+.upperHeaderLogoContainer {
+    height: 100%;
+    max-width: 300px;
+}
+
 .upperHeaderLogo {
     background: url("../img/logo.png");
-    background: url("../img/logo.svg"),
-        linear-gradient(transparent, transparent);
     height: 100%;
     background-repeat: no-repeat;
     background-size: contain;
