@@ -199,7 +199,7 @@ class Database
 
     private function sendUptime($d0, $d1)
     {
-        if (number_format(($d0 / ($d0 + $d1)) * 100, 0) == 100) {
+        if (number_format(($d0 / ($d0 + $d1)) * 100, 2) == 100.00) {
             return number_format(($d0 / ($d0 + $d1)) * 100, 0) . '%';
         } else {
             return number_format(($d0 / ($d0 + $d1)) * 100, 2) . '%';
