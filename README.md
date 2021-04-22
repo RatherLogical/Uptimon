@@ -23,7 +23,7 @@ Never download from master unless you want to hack on Uptimon. Get the latest re
 Requirements
 - A linux OS - CRON jobs are used to trigger events, therefore linux is required.
 - A Web Server (NGINX, Apache, etc...). I have only tested Uptimon with NGINX, but it should work with other web servers.
-- PHP (Only guaranteed to work on the latest versions of PHP; 7.4+, not tested with PHP 8.0 yet).
+- PHP (Only guaranteed to work on the latest versions of PHP; 7.4+, PHP 8.0 has been partially tested and seems to work fine).
 - MySQL (Only tested with MySQL v8, should work with older versions).
 
 To start you need to set the time zone at the top of the ``config.php`` file, you will also need to add your services to the list (obviously remove the default entries), and set up your MySQL database information.
