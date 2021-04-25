@@ -3,21 +3,21 @@
 - Administration panel.
 - Notifications through Slack, Discord, SMTP, SMS (Twilio), etc...
 
-# v0.1.0 - Beta 3 (currently underway)
+# v0.1.0 - Beta 3
 
-> **NOTICE:** Your Uptimon installation's database will need to be wiped in order for the ssl validation to work properly.
-- **ADDED** It was previously only possible to get uptime data for the last 24 hours. Now you can choose the time range of uptime data to display on the frontend. ***IN QUEUE***
-- **ADDED** A graphical installer. ***DONE***
-- **ADDED** SSL validation. ***IN QUEUE***
-- **FRONTEND** Added an option to set the page title. ***DONE***
-- **FRONTEND** Refined the responsiveness of the frontend a bit more. ***DONE***
-- **PERFORMANCE** Uptimon can now handle many more checks. The backend is using cURL multi which means multiple connections can be made simultaneously. Before, only one connection could be made at a time. ***IN PROGRESS***
-- **PERFORMANCE** Reduced amount of cURL requests made for each check to 1. ***DONE***
-- **PERFORMANCE** Reduced amount of code that has to be executed for each check. ***DONE***
+> **NOTICE:** You will need to completely reinstall Uptimon for SSL validation to work properly.
+- **ADDED** It was previously only possible to get uptime data for the last 24 hours. Now you can choose the time range of uptime data to display on the frontend.
+- **ADDED** A graphical installer.
+- **ADDED** SSL validation.
+- **FRONTEND** Added an option to set the page title.
+- **FRONTEND** Refined the responsiveness of the frontend a bit more.
+- **PERFORMANCE** Uptimon can now handle many more checks. The backend is using cURL multi which means multiple connections can be made simultaneously. Before, only one connection could be made at a time.
+- **PERFORMANCE** Reduced amount of cURL requests made for each check to 1.
+- **PERFORMANCE** Reduced amount of code that has to be executed for each check.
 - **TWEAK** Changed all occurrences of uptimeter to uptimon. ***DONE***
-- **TWEAK** Changed suggested filesystem path from `/var/www/uptime` to `/var/www/uptimon`. ***DONE***
+- **TWEAK** Changed suggested filesystem path from `/var/www/uptime` to `/var/www/uptimon`.
 - **FIX** The cURL timeout works now. ***DONE***
-- **FIX** If an invalid IP or domain is added as a check, give a friendly error instead of breaking. ***IN QUEUE***
+- **FIX** If an invalid IP or domain is added as a check, give a friendly error instead of breaking.
 
 # v0.0.3 - Beta 2.5
 - **ADDED** Added an overall status indicator at the top of the page for at-a-glance status info.
