@@ -1,6 +1,6 @@
 @keyframes shadow-pulse {
     0% {
-        box-shadow: 0 0 0 0px var(--online_primary_color);
+        box-shadow: 0 0 0 0px var(--online_primary);
     }
     100% {
         box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
@@ -16,8 +16,8 @@
 }
 
 body {
-    background-color: var(--page_background_color);
-    color: var(--page_font_color);
+    background-color: var(--page_background);
+    color: var(--page_font);
     font-family: "Ubuntu" !important;
     font-weight: normal;
     font-size: 18px;
@@ -44,7 +44,7 @@ body {
 /* Header Styles */
 .upperHeader {
     background-color: #333333;
-    box-shadow: 0 5px 10px rgb(0 0 0 / 80%);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
     height: 70px;
     padding: 8px 0;
     position: relative;
@@ -86,7 +86,7 @@ body {
 .overallStatus {
     background-color: #333333;
     border-radius: 0.8rem;
-    box-shadow: 0 5px 10px rgb(0 0 0 / 80%);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
     overflow: hidden;
     margin-top: -21px;
 }
@@ -103,15 +103,15 @@ body {
 }
 
 .overallStatusIcon.allOperational {
-    background-color: var(--online_primary_color);
+    background-color: var(--online_primary);
 }
 
 .overallStatusIcon.partialOutage {
-    background-color: var(--not_available_color);
+    background-color: var(--not_available);
 }
 
 .overallStatusIcon.totalOutage {
-    background-color: var(--offline_primary_color);
+    background-color: var(--offline_primary);
 }
 
 .overallStatusText {
@@ -125,7 +125,7 @@ body {
 }
 
 .chartOuter {
-    background-color: var(--chart_background_color);
+    background-color: var(--chart_background);
     padding: 10px 0 0 0;
     border-radius: 0.8rem;
     overflow: hidden;
@@ -149,7 +149,7 @@ body {
     left: 0;
     height: 70px;
     width: 100%;
-    background-color: var(--service_info_background_color);
+    background-color: var(--service_info_background);
 }
 
 .belowChart {
@@ -175,26 +175,26 @@ body {
 }
 
 .sslStatus.sslValid {
-    background-color: var(--online_primary_color);
+    background-color: var(--online_primary);
 }
 
 .sslStatus.sslInvalid {
-    background-color: var(--offline_primary_color);
+    background-color: var(--offline_primary);
 }
 
 .sslStatus.sslNA {
-    background-color: var(--not_available_color);
+    background-color: var(--not_available);
 }
 
 .aboveChartOuter {
     width: fit-content;
-    background-color: var(--service_info_accent_color);
+    background-color: var(--service_info_accent);
     height: 67px;
 }
 
 .aboveChartOuter ~ .aboveChartOuter {
     width: fit-content;
-    background-color: var(--service_info_accent_color);
+    background-color: var(--service_info_accent);
     height: 67px;
     margin-left: 3px;
 }
@@ -253,15 +253,15 @@ body {
 }
 
 .serviceOnline {
-    background-color: var(--online_primary_color);
+    background-color: var(--online_primary);
 }
 
 .serviceOffline {
-    background-color: var(--offline_primary_color);
+    background-color: var(--offline_primary);
 }
 
 .serviceNotAvailable {
-    background-color: var(--not_available_color);
+    background-color: var(--not_available);
 }
 
 /* Below Chart */
@@ -299,11 +299,42 @@ body {
     font-size: 20px;
 }
 
+.timePeriodOuter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px;
+    float: right;
+}
+
+.custom-select {
+    font-size: 18px;
+    height: auto;
+    background-color: #333333 !important;
+    color: #ffffff;
+    border: unset;
+    border-radius: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: "Ubuntu";
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
+        right 0.75rem center/8px 10px no-repeat;
+}
+
+.custom-select:focus {
+    border: unset;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.custom-select-option {
+    font-family: "Ubuntu", "Arial";
+}
+
 .liveUpdatePing {
     width: 14px;
     height: 14px;
     border-radius: 50px;
-    background-color: var(--online_primary_color);
+    background-color: var(--online_primary);
     animation: update-ping 1s infinite;
     float: left;
     margin-right: 6px;
@@ -311,7 +342,7 @@ body {
 
 @keyframes update-ping {
     0% {
-        box-shadow: 0 0 0 0px var(--online_primary_color);
+        box-shadow: 0 0 0 0px var(--online_primary);
     }
     100% {
         box-shadow: 0 0 0 4px rgba(0, 0, 0, 0);

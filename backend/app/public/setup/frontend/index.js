@@ -4,11 +4,11 @@
 // 2. Check that the connection details are valid
 // 3. Set the contents of the config file
 
-let timezone = document.getElementById('timezone'); // America/New_York
-let db_host = document.getElementById('db_host'); // 95.217.176.126
-let db_name = document.getElementById('db_name'); // status
-let db_user = document.getElementById('db_user'); // status
-let db_pass = document.getElementById('db_pass'); // c45996dca8b8188c05e9221560c617fceb2adfe5fb230377eb2d37e4526781e5
+let timezone = document.getElementById('timezone');
+let db_host = document.getElementById('db_host');
+let db_name = document.getElementById('db_name');
+let db_user = document.getElementById('db_user');
+let db_pass = document.getElementById('db_pass');
 let admin_email = document.getElementById('admin_email');
 let admin_pass = document.getElementById('admin_pass');
 
@@ -19,6 +19,31 @@ document.getElementById('installUptimon').addEventListener('click', function() {
     document.getElementById('message').style.display = 'none';
     checkRequiredFields();
 }, false);
+
+// 5000 ms after the page loads make sure that the installed PHP version meets the requirements.
+setTimeout(function() {
+    var xhr = new XMLHttpRequest();
+    
+    xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            let JSON_resp  = JSON.parse(this.responseText);
+            if (JSON_resp.message === 'success') {
+                showMessage(JSON_resp.status, JSON_resp.message);
+            } else if (JSON_resp.status !== 'success') {
+                showMessage(JSON_resp.status, JSON_resp.message);
+                document.getElementById('installUptimon').setAttribute('disabled', true);
+            }
+        }
+    });
+    
+    xhr.open("GET", "/setup/backend/setup.php?type=checkRequirements");
+    xhr.timeout = XHR_TIMEOUT;
+    xhr.addEventListener("ontimeout", function(e) {
+         console.log(e);
+    });
+    
+    xhr.send();
+}, 5000);
 
 // Ensure all fields are completed properly
 function checkRequiredFields() {

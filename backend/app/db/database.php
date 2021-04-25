@@ -8,6 +8,54 @@ class Database
     private $db_name = DATABASE_NAME; // Database name
     private $db_username = DATABASE_USER; // User for the database
     private $db_password = DATABASE_PASSWORD; // Password for the database User
+    
+    private function sqlTemplate($type, $d0, $timePeriod) {
+        if ($type === "range") {
+            $timeNow = date("Y-m-d H:i:s");
+            return "SELECT * FROM `$d0` WHERE timestamp BETWEEN '$timePeriod' AND '$timeNow'";
+        } else if ($type === "all") {
+            return "SELECT * FROM `$d0`";
+        }
+    }
+
+    // Generates a SQL query based on an input string
+    private function setTimePeriod($timeString, $d0) {
+        if ($timeString === "-30_mins") { // Last 30 minutes
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-30 minutes"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-1_hour") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-1 hour"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-6_hours") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-6 hours"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-12_hours") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-12 hours"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-1_day") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-1 day"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-3_days") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-3 days"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-7_days") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-7 days"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-14_days") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-14 days"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-1_month") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-1 month"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "-3_months") {
+            $timePeriod = date("Y-m-d H:i:s", strtotime("-3 months"));
+            return $this->sqlTemplate("range", $d0, $timePeriod);
+        } else if ($timeString === "all") {
+            return $this->sqlTemplate("all", $d0, null);
+        } else {
+            return false;
+        }
+    }
 
     // Inserts the uptime data into the database
     // $d0 = Response Time, $d1 = SSL Status, $d2 = Status (Online/Offline), $d3 = Timestamp, $d4 = Table Name
@@ -25,19 +73,23 @@ class Database
         $conn->close();
     }
 
-    // Get a comma seperated list of response times over the last 24H
-    public function responseTime24H($d0)
+    // Get a comma separated list of response times for the specified period
+    public function responseTime($d0, $timeString)
     {
         $case = 0;
         $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
 
         // If this service exists in the database
         if ($this->table_exists($d0, $conn)) {
-            $last24H = date("Y-m-d H:i:s", strtotime("-1 day"));
-            $timeNow = date("Y-m-d H:i:s");
             $data = array();
 
-            $sql = "SELECT * FROM `$d0` WHERE timestamp BETWEEN '$last24H' AND '$timeNow'";
+            $timePeriod = $this->setTimePeriod($timeString, $d0);
+
+            if ($timePeriod) {
+                $sql = $timePeriod;
+            } else {
+                return false;
+            }
 
             $result = $conn->query($sql);
 
@@ -71,60 +123,23 @@ class Database
         }
     }
 
-    // Get the current SSL status of a service
-    public function SSL_Status($d0)
+    // Get the average uptime for the specified period
+    public function averageResponseTime($d0, $timeString)
     {
         $case = 0;
         $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
 
         // If this service exists in the database
         if ($this->table_exists($d0, $conn)) {
-            $serviceStatus = null;
-
-            $sql = "SELECT ssl_status FROM `$d0` ORDER BY id DESC LIMIT 1";
-
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $serviceStatus = $row["ssl_status"];
-                }
-                $case = 1;
-            }
-            $conn->close();
-        }
-
-        if ($case) {
-            return $this->sendSSL_Status($serviceStatus);
-        } else {
-            return false;
-        }
-    }
-
-    private function sendSSL_Status($d0)
-    {
-        if ($d0 === "1") {
-            return "VALID";
-        } else if ($d0 === "0") {
-            return "INVALID";
-        } else {
-            return "N/A";
-        }
-    }
-
-    // Get the average uptime over the last 24H
-    public function averageResponseTime24h($d0)
-    {
-        $case = 0;
-        $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
-
-        // If this service exists in the database
-        if ($this->table_exists($d0, $conn)) {
-            $last24H = date("Y-m-d H:i:s", strtotime("-1 day"));
-            $timeNow = date("Y-m-d H:i:s");
             $data = array();
 
-            $sql = "SELECT * FROM `$d0` WHERE timestamp BETWEEN '$last24H' AND '$timeNow'";
+            $timePeriod = $this->setTimePeriod($timeString, $d0);
+
+            if ($timePeriod) {
+                $sql = $timePeriod;
+            } else {
+                return false;
+            }
 
             $result = $conn->query($sql);
 
@@ -158,19 +173,23 @@ class Database
     }
 
     // Get uptime over the last 24H
-    public function uptime24H($d0)
+    public function uptime($d0, $timeString)
     {
         $case = 0;
         $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
 
         // If this service exists in the database
         if ($this->table_exists($d0, $conn)) {
-            $last24H = date("Y-m-d H:i:s", strtotime("-1 day"));
-            $timeNow = date("Y-m-d H:i:s");
             $upCount = 0;
             $downCount = 0;
 
-            $sql = "SELECT * FROM `$d0` WHERE timestamp BETWEEN '$last24H' AND '$timeNow'";
+            $timePeriod = $this->setTimePeriod($timeString, $d0);
+
+            if ($timePeriod) {
+                $sql = $timePeriod;
+            } else {
+                return false;
+            }
 
             $result = $conn->query($sql);
 
@@ -279,6 +298,47 @@ class Database
             return "ONLINE";
         } else {
             return "OFFLINE";
+        }
+    }
+
+    // Get the current SSL status of a service
+    public function SSL_Status($d0)
+    {
+        $case = 0;
+        $conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
+
+        // If this service exists in the database
+        if ($this->table_exists($d0, $conn)) {
+            $serviceStatus = null;
+
+            $sql = "SELECT ssl_status FROM `$d0` ORDER BY id DESC LIMIT 1";
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $serviceStatus = $row["ssl_status"];
+                }
+                $case = 1;
+            }
+            $conn->close();
+        }
+
+        if ($case) {
+            return $this->sendSSL_Status($serviceStatus);
+        } else {
+            return false;
+        }
+    }
+
+    private function sendSSL_Status($d0)
+    {
+        if ($d0 === "1") {
+            return "VALID";
+        } else if ($d0 === "0") {
+            return "INVALID";
+        } else {
+            return "N/A";
         }
     }
 

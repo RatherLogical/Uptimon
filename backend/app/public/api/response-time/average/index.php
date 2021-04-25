@@ -23,14 +23,20 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
     } else {
         exit("Domain/IP invalid");
     }
-
-    $uptime24H = $db->uptime24H($url);
-
-    if ($uptime24H) {
-        echo $uptime24H;
-    } else {
-        exit("N/A");
-    }
 } else {
     exit("Domain not given");
+}
+
+if (isset($_GET['period'])) {
+    $timePeriod = $_GET['period'];
+} else {
+    exit("Time period not specified");
+}
+
+$averageResponseTime = $db->averageResponseTime($url, $timePeriod);
+
+if ($averageResponseTime) {
+    echo $averageResponseTime;
+} else {
+    exit("N/A");
 }

@@ -1,10 +1,10 @@
 <?php
 
-$configJSONPath = '../../../../../../config.json';
-require realpath('../../../../../../config.php');
-require realpath('../../../../../db/database.php');
-require realpath('../../../../../../vendor/autoload.php');
-require realpath('../../../../../includes/api-output.php');
+$configJSONPath = '../../../../config.json';
+require realpath('../../../../config.php');
+require realpath('../../../db/database.php');
+require realpath('../../../../vendor/autoload.php');
+require realpath('../../../includes/api-output.php');
 
 $db = new Database;
 
@@ -23,14 +23,20 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
     } else {
         exit("Domain/IP invalid");
     }
-
-    $averageResponseTime24h = $db->averageResponseTime24h($url);
-
-    if ($averageResponseTime24h) {
-        echo $averageResponseTime24h;
-    } else {
-        exit("N/A");
-    }
 } else {
     exit("Domain not given");
+}
+
+if (isset($_GET['period'])) {
+    $timePeriod = $_GET['period'];
+} else {
+    exit("Time period not specified");
+}
+
+$uptime = $db->uptime($url, $timePeriod);
+
+if ($uptime) {
+    echo $uptime;
+} else {
+    exit("N/A");
 }

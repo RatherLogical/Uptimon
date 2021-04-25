@@ -125,3 +125,8 @@ a {
 .installButton:focus {
     outline: unset;
 }
+
+.installButton:disabled {
+    background-color: #ff0007;
+    cursor: not-allowed;
+}

@@ -24,12 +24,12 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
         exit("Domain/IP invalid");
     }
 
-    $serviceStatus = $db->SSL_Status($url);
+    $SSL_Status = $db->SSL_Status($url);
 
-    if (!$serviceStatus) {
+    if (!$SSL_Status) {
         exit("N/A");
     } else {
-        echo $serviceStatus;
+        echo $SSL_Status;
     }
 } else {
     exit("Domain not given");

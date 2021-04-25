@@ -2,11 +2,11 @@
 
 // This API endpoint returns all of the non-zero response times over the last 24 hours
 // A request would look like: https://status.example.com/response-time/24h/?target=www.example.com
-$configJSONPath = '../../../../../config.json';
-require realpath('../../../../../config.php');
-require realpath('../../../../db/database.php');
-require realpath('../../../../../vendor/autoload.php');
-require realpath('../../../../includes/api-output.php');
+$configJSONPath = '../../../../config.json';
+require realpath('../../../../config.php');
+require realpath('../../../db/database.php');
+require realpath('../../../../vendor/autoload.php');
+require realpath('../../../includes/api-output.php');
 
 use Phpfastcache\Helper\Psr16Adapter;
 
@@ -31,6 +31,12 @@ if (isset($_GET['target'])) { // target can either be a domain or IPV4 address (
     exit("Domain not given");
 }
 
+if (isset($_GET['period'])) {
+    $timePeriod = $_GET['period'];
+} else {
+    exit("Time period not specified");
+}
+
 $db = new Database;
 
 if (!$Psr16Adapter->has($url)) {
@@ -44,7 +50,7 @@ if (!$Psr16Adapter->has($url)) {
         }
     }
 
-    $data = $db->responseTime24H($url);
+    $data = $db->responseTime($url, $timePeriod);
 
     if ($data !== false) {
         $output = '[';
@@ -60,5 +66,5 @@ if (!$Psr16Adapter->has($url)) {
         exit("N/A");
     }
 } else {
-   echo $Psr16Adapter->get($url);
+  echo $Psr16Adapter->get($url);
 }

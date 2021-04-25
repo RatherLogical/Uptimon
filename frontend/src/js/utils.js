@@ -1,6 +1,6 @@
 "use strict";
 
-import { doc } from "prettier";
+import { periodChangeAllowed } from "../index";
 
 export function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (txt) {
@@ -43,8 +43,10 @@ export function updateBottomStatus(text, complete = false) {
     if (complete) {
         document.getElementById("liveUpdateText").innerHTML = "Update Complete";
         setTimeout(function () {
-            document.getElementById("liveUpdateText").innerHTML =
-                "Live Update Enabled";
+            if (periodChangeAllowed) {
+                document.getElementById("liveUpdateText").innerHTML =
+                    "Live Update Enabled";
+            }
         }, 5000);
     } else {
         document.getElementById("liveUpdateText").innerHTML = text;

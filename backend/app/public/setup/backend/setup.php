@@ -20,6 +20,8 @@ if (isset($_REQUEST['type'])) {
         } else {
             echo '{"status":"failure", "message":"Missing db_host or db_user or db_pass or db_name."}';
         }
+    } else if ($_REQUEST['type'] == "checkRequirements") {
+        checkRequirements();
     } else if ($_REQUEST['type'] == "validateEmail") {
         validateEmail($_REQUEST['admin_email']);
     } elseif ($_REQUEST['type'] == "createConfig") {
@@ -63,4 +65,31 @@ function createConfigFile($configData) {
     fclose($fd);
     // Notify the client that the application is fully installed
     echo '{"status":"success", "message":"Uptimon installed! The backend is now set up."}';
+}
+
+function checkRequirements() {
+    $allAvailable = true;
+    // Check whether the installed PHP version matches the required version.
+    if (version_compare(phpversion(), '7.4.0') < 0) {
+        echo '{"status":"failure", "message":"Your PHP version (<code>' . phpversion() . '</code>) is incompatible with Uptimon. Please update to at least PHP <code>7.4.x</code>."}';
+        $allAvailable = false;
+        return;
+    }
+
+    // Ensure that cURL is installed.
+    if (!in_array('curl', get_loaded_extensions())) {
+        echo '{"status":"failure", "message":"cURL is not installed on this system. Please install it to proceed with the installation of Uptimon."}';
+        $allAvailable = false;
+        return;
+    }
+
+    if (!function_exists('mysqli_connect')) {
+        echo '{"status":"failure", "message":"PHP cannot use the mysqli module please ensure it is installed and enabled."}';
+        $allAvailable = false;
+        return;
+    }
+
+    if ($allAvailable) {
+        echo '{"status":"success", "message":"Minimum requirements met."}';
+    }
 }
