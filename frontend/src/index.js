@@ -328,6 +328,7 @@ export function getServices(type) {
 
             if (globals.verbosity) {
                 console.log("Title:", item.title);
+                console.log("Data Period:", dataPeriod);
                 console.log("Safe Name:", safeName);
                 console.log("Target:", item.target);
                 console.log("SSL Status:", sslStatus);

@@ -39,16 +39,16 @@ if (isset($_GET['period'])) {
 
 $db = new Database;
 
-if (!$Psr16Adapter->has($url)) {
-    $intervalTTL = '';
-    foreach ($checks as $key => $check) {
-        $interval = $check[0];
-        $parsedCheckUrl = $extract->parse($check[1]);
+//if (!$Psr16Adapter->has($url)) {
+    //$intervalTTL = '';
+    // foreach ($checks as $key => $check) {
+        // $interval = $check[0];
+        // $parsedCheckUrl = $extract->parse($check[1]);
 
-        if ($parsedCheckUrl == $parsedUrl) {
-            $intervalTTL = $interval * 60;
-        }
-    }
+        // if ($parsedCheckUrl == $parsedUrl) {
+        //     //$intervalTTL = $interval * 60;
+        // }
+    // }
 
     $data = $db->responseTime($url, $timePeriod);
 
@@ -60,11 +60,11 @@ if (!$Psr16Adapter->has($url)) {
         // Remove trailing comma
         $output = substr($output, 0, -1);
         $output .= ']';
-        $Psr16Adapter->set($url, $output, $intervalTTL);
+        //$Psr16Adapter->set($url, $output, $intervalTTL);
         echo $output;
     } else {
         exit("N/A");
     }
-} else {
-  echo $Psr16Adapter->get($url);
-}
+// } else {
+//   echo $Psr16Adapter->get($url);
+// }
