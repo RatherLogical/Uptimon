@@ -264,8 +264,9 @@ export function getServices(type) {
                     `Updating Service ${i + 1} of ${services.length}`
                 );
 
-                dataPeriod = document.getElementById(`${safeName}_timePeriod`)
-                    .value;
+                dataPeriod = document.getElementById(
+                    `${safeName}_timePeriod`
+                ).value;
             }
 
             // Get the Online/Offline status of the service
@@ -565,9 +566,8 @@ function updateServices() {
                 item.avgRespTime; // Update Average Response Time
             document.getElementById(`${item.safeName}_uptime`).innerHTML =
                 item.uptime; // Update Uptime
-            document.getElementById(
-                `${item.safeName}_status`
-            ).innerHTML = statusText; // Update Online/Offline Status
+            document.getElementById(`${item.safeName}_status`).innerHTML =
+                statusText; // Update Online/Offline Status
             document.getElementById(
                 `${item.safeName}_lastChecked`
             ).innerHTML = `Last Checked: ${item.lastChecked}`; // Update Last Checked Time
